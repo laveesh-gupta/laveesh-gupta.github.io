@@ -62,15 +62,16 @@ export default function Hero() {
 
       <div className="hero__container">
         <div className="hero__glass">
-          <span className="hero__eyebrow">Welcome to my portfolio</span>
+          <span className="hero__eyebrow">Hi there! 👋🏻</span>
+          <p className="hero__text">I am</p>
           <h1 className="hero__name">Laveesh Gupta</h1>
           <p className="hero__role">
-            I'm a <span className="hero__role-text">{text}</span>
+            a <span className="hero__role-text">{text}</span>
             <span className="hero__cursor" aria-hidden="true">
               |
             </span>
           </p>
-          <p className="hero__tagline">
+          <p className="hero__text">
             I design and build clean, performant web experiences with a focus on
             detail, motion, and usability.
           </p>
