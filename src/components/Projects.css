@@ -17,11 +17,11 @@
   --proj-tag-bg: rgba(255, 255, 255, 0.08);
   --proj-tag-border: rgba(255, 255, 255, 0.16);
 
-  --proj-orb-1: rgba(88, 130, 255, 0.3);
-  --proj-orb-2: rgba(255, 105, 180, 0.2);
+  --proj-orb-1: rgba(88, 130, 255, 0.35);
+  --proj-orb-2: rgba(255, 105, 180, 0.22);
 
   position: relative;
-  overflow: hidden;
+  overflow-x: clip;
   padding: clamp(4rem, 8vw, 8rem) clamp(1.25rem, 5vw, 4rem);
   background: transparent;
   color: var(--proj-text);
@@ -59,14 +59,14 @@
 .projects__orb {
   position: absolute;
   border-radius: 50%;
-  filter: blur(100px);
+  filter: blur(120px);
 }
 
 .projects__orb--one {
-  width: 420px;
-  height: 420px;
-  top: 10%;
-  right: -100px;
+  width: 360px;
+  height: 360px;
+  top: -120px;
+  right: -120px;
   background: var(--proj-orb-1);
 }
 

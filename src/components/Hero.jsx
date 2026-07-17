@@ -63,7 +63,7 @@ export default function Hero() {
       <div className="hero__container">
         <div className="hero__glass">
           <span className="hero__eyebrow">Welcome to my portfolio</span>
-          <h1 className="hero__name">Your Name</h1>
+          <h1 className="hero__name">Laveesh Gupta</h1>
           <p className="hero__role">
             I'm a <span className="hero__role-text">{text}</span>
             <span className="hero__cursor" aria-hidden="true">

@@ -22,11 +22,11 @@
   --about-pill-border: rgba(255, 255, 255, 0.16);
   --about-pill-text: #f5f5f7;
 
-  --about-orb-1: rgba(88, 130, 255, 0.35);
-  --about-orb-2: rgba(255, 105, 180, 0.22);
+  --about-orb-1: rgba(255, 105, 180, 0.22);
+  --about-orb-2: rgba(88, 130, 255, 0.35);
 
   position: relative;
-  overflow: hidden;
+  overflow-x: clip;
   padding: clamp(4rem, 8vw, 8rem) clamp(1.25rem, 5vw, 4rem);
   background: transparent;
   color: var(--about-text);
@@ -67,22 +67,22 @@
 .about__orb {
   position: absolute;
   border-radius: 50%;
-  filter: blur(90px);
+  filter: blur(120px);
 }
 
 .about__orb--one {
-  width: 420px;
-  height: 420px;
+  width: 360px;
+  height: 360px;
   top: -120px;
-  left: -80px;
+  left: -100px;
   background: var(--about-orb-1);
 }
 
 .about__orb--two {
   width: 360px;
   height: 360px;
-  bottom: -100px;
-  right: -60px;
+  bottom: -120px;
+  right: -80px;
   background: var(--about-orb-2);
 }
 

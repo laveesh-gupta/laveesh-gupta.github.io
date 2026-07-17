@@ -24,7 +24,7 @@
   --hero-orb-2: rgba(255, 105, 180, 0.22);
 
   position: relative;
-  overflow: hidden;
+  overflow-x: clip;
   min-height: 100svh;
   display: flex;
   align-items: center;
@@ -68,7 +68,7 @@
 .hero__orb {
   position: absolute;
   border-radius: 50%;
-  filter: blur(100px);
+  filter: blur(120px);
 }
 
 .hero__orb--one {
@@ -80,10 +80,10 @@
 }
 
 .hero__orb--two {
-  width: 380px;
-  height: 380px;
+  width: 360px;
+  height: 360px;
   bottom: -120px;
-  left: -80px;
+  left: -100px;
   background: var(--hero-orb-2);
 }
 
