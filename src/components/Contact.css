@@ -1,0 +1,261 @@
+/* ============================================
+   Contact Section — Apple-style Glassmorphism
+   ============================================ */
+
+.contact {
+  --contact-bg: #0b0b0f;
+  --contact-bg-alt: #121218;
+  --contact-text: #f5f5f7;
+  --contact-text-muted: rgba(245, 245, 247, 0.68);
+  --contact-eyebrow: #8ab4ff;
+
+  --contact-glass-bg: rgba(255, 255, 255, 0.06);
+  --contact-glass-border: rgba(255, 255, 255, 0.14);
+  --contact-glass-shadow: rgba(0, 0, 0, 0.45);
+  --contact-glass-highlight: rgba(255, 255, 255, 0.35);
+
+  --contact-input-bg: rgba(255, 255, 255, 0.05);
+  --contact-input-border: rgba(255, 255, 255, 0.16);
+  --contact-input-focus: rgba(138, 180, 255, 0.6);
+
+  --contact-btn-bg: #f5f5f7;
+  --contact-btn-text: #0b0b0f;
+
+  --contact-orb-1: rgba(88, 130, 255, 0.32);
+  --contact-orb-2: rgba(255, 105, 180, 0.2);
+
+  position: relative;
+  overflow: hidden;
+  padding: clamp(4rem, 8vw, 8rem) clamp(1.25rem, 5vw, 4rem);
+  background: transparent;
+  color: var(--contact-text);
+  font-family:
+    -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto,
+    sans-serif;
+}
+
+[data-theme="light"] .contact {
+  --contact-bg: #f5f5f7;
+  --contact-bg-alt: #eceef1;
+  --contact-text: #1d1d1f;
+  --contact-text-muted: rgba(29, 29, 31, 0.62);
+  --contact-eyebrow: #2f6fed;
+
+  --contact-glass-bg: rgba(255, 255, 255, 0.5);
+  --contact-glass-border: rgba(255, 255, 255, 0.7);
+  --contact-glass-shadow: rgba(31, 38, 61, 0.14);
+  --contact-glass-highlight: rgba(255, 255, 255, 0.85);
+
+  --contact-input-bg: rgba(255, 255, 255, 0.5);
+  --contact-input-border: rgba(255, 255, 255, 0.8);
+  --contact-input-focus: rgba(47, 111, 237, 0.5);
+
+  --contact-btn-bg: #1d1d1f;
+  --contact-btn-text: #f5f5f7;
+
+  --contact-orb-1: rgba(88, 130, 255, 0.22);
+  --contact-orb-2: rgba(255, 105, 180, 0.16);
+}
+
+.contact__ambient {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.contact__orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(100px);
+}
+
+.contact__orb--one {
+  width: 420px;
+  height: 420px;
+  top: -100px;
+  left: 5%;
+  background: var(--contact-orb-1);
+}
+
+.contact__orb--two {
+  width: 380px;
+  height: 380px;
+  bottom: -120px;
+  right: 0;
+  background: var(--contact-orb-2);
+}
+
+.contact__container {
+  position: relative;
+  z-index: 1;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.contact__glass {
+  position: relative;
+  background: var(--contact-glass-bg);
+  border: 1px solid var(--contact-glass-border);
+  border-radius: 32px;
+  padding: clamp(2rem, 5vw, 3.25rem);
+  backdrop-filter: blur(24px) saturate(160%);
+  -webkit-backdrop-filter: blur(24px) saturate(160%);
+  box-shadow:
+    0 20px 60px var(--contact-glass-shadow),
+    inset 0 1px 0 var(--contact-glass-highlight);
+  text-align: center;
+}
+
+.contact__glass::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(
+    135deg,
+    var(--contact-glass-highlight),
+    transparent 40%
+  );
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.contact__eyebrow {
+  display: inline-block;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--contact-eyebrow);
+  margin-bottom: 0.9rem;
+}
+
+.contact__title {
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  margin: 0 0 0.75rem;
+  color: var(--contact-text);
+}
+
+.contact__subtitle {
+  font-size: 1rem;
+  color: var(--contact-text-muted);
+  margin: 0 0 2rem;
+}
+
+.contact__form {
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.contact__row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+}
+
+@media (max-width: 560px) {
+  .contact__row {
+    grid-template-columns: 1fr;
+  }
+}
+
+.contact__field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.contact__label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--contact-text-muted);
+}
+
+.contact__input {
+  font-family: inherit;
+  font-size: 0.95rem;
+  color: var(--contact-text);
+  background: var(--contact-input-bg);
+  border: 1px solid var(--contact-input-border);
+  border-radius: 14px;
+  padding: 0.8rem 1rem;
+  outline: none;
+  transition:
+    border-color 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.contact__input::placeholder {
+  color: var(--contact-text-muted);
+  opacity: 0.7;
+}
+
+.contact__input:focus {
+  border-color: var(--contact-input-focus);
+  box-shadow: 0 0 0 3px
+    color-mix(in srgb, var(--contact-input-focus) 35%, transparent);
+}
+
+.contact__textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.contact__btn {
+  font-family: inherit;
+  font-size: 0.98rem;
+  font-weight: 600;
+  padding: 0.9rem 1.5rem;
+  border-radius: 999px;
+  border: none;
+  cursor: pointer;
+  background: var(--contact-btn-bg);
+  color: var(--contact-btn-text);
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.contact__btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px var(--contact-glass-shadow);
+}
+
+.contact__links {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-top: 2rem;
+  flex-wrap: wrap;
+}
+
+.contact__link {
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--contact-eyebrow);
+  text-decoration: none;
+}
+
+.contact__link:hover {
+  text-decoration: underline;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .contact__btn {
+    transition: none;
+  }
+  .contact__btn:hover {
+    transform: none;
+  }
+}

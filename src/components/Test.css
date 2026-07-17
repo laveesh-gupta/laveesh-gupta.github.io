@@ -1,0 +1,247 @@
+/* ============================================
+   About Section — Apple-style Glassmorphism
+   Supports dark (default) and light themes.
+   Toggle light theme by adding data-theme="light"
+   to a parent element (e.g. <body data-theme="light">)
+   or it will auto-adapt via prefers-color-scheme.
+   ============================================ */
+
+.about {
+  --about-bg: #0b0b0f;
+  --about-bg-alt: #121218;
+  --about-text: #f5f5f7;
+  --about-text-muted: rgba(245, 245, 247, 0.68);
+  --about-eyebrow: #8ab4ff;
+
+  --about-glass-bg: rgba(255, 255, 255, 0.06);
+  --about-glass-border: rgba(255, 255, 255, 0.14);
+  --about-glass-shadow: rgba(0, 0, 0, 0.45);
+  --about-glass-highlight: rgba(255, 255, 255, 0.35);
+
+  --about-pill-bg: rgba(255, 255, 255, 0.08);
+  --about-pill-border: rgba(255, 255, 255, 0.16);
+  --about-pill-text: #f5f5f7;
+
+  --about-orb-1: rgba(88, 130, 255, 0.35);
+  --about-orb-2: rgba(255, 105, 180, 0.22);
+
+  position: relative;
+  overflow: hidden;
+  padding: clamp(4rem, 8vw, 8rem) clamp(1.25rem, 5vw, 4rem);
+  background: linear-gradient(
+    180deg,
+    var(--about-bg) 0%,
+    var(--about-bg-alt) 100%
+  );
+  color: var(--about-text);
+  font-family:
+    -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto,
+    sans-serif;
+}
+
+/* Light theme override */
+[data-theme="light"] .about {
+  --about-bg: #f5f5f7;
+  --about-bg-alt: #eceef1;
+  --about-text: #1d1d1f;
+  --about-text-muted: rgba(29, 29, 31, 0.62);
+  --about-eyebrow: #2f6fed;
+
+  --about-glass-bg: rgba(255, 255, 255, 0.5);
+  --about-glass-border: rgba(255, 255, 255, 0.7);
+  --about-glass-shadow: rgba(31, 38, 61, 0.14);
+  --about-glass-highlight: rgba(255, 255, 255, 0.85);
+
+  --about-pill-bg: rgba(255, 255, 255, 0.55);
+  --about-pill-border: rgba(255, 255, 255, 0.8);
+  --about-pill-text: #1d1d1f;
+
+  --about-orb-1: rgba(88, 130, 255, 0.25);
+  --about-orb-2: rgba(255, 105, 180, 0.2);
+}
+
+/* Ambient glow orbs behind the glass */
+.about__ambient {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.about__orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(90px);
+}
+
+.about__orb--one {
+  width: 420px;
+  height: 420px;
+  top: -120px;
+  left: -80px;
+  background: var(--about-orb-1);
+}
+
+.about__orb--two {
+  width: 360px;
+  height: 360px;
+  bottom: -100px;
+  right: -60px;
+  background: var(--about-orb-2);
+}
+
+.about__container {
+  position: relative;
+  z-index: 1;
+  max-width: 1100px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  gap: clamp(1.25rem, 3vw, 2rem);
+  align-items: start;
+}
+
+@media (max-width: 860px) {
+  .about__container {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Glass panel */
+.about__glass {
+  position: relative;
+  background: var(--about-glass-bg);
+  border: 1px solid var(--about-glass-border);
+  border-radius: 28px;
+  padding: clamp(1.75rem, 4vw, 2.75rem);
+  backdrop-filter: blur(24px) saturate(160%);
+  -webkit-backdrop-filter: blur(24px) saturate(160%);
+  box-shadow:
+    0 20px 60px var(--about-glass-shadow),
+    inset 0 1px 0 var(--about-glass-highlight);
+  transition:
+    transform 0.4s ease,
+    box-shadow 0.4s ease;
+}
+
+.about__glass::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(
+    135deg,
+    var(--about-glass-highlight),
+    transparent 40%
+  );
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.about__glass:hover {
+  transform: translateY(-4px);
+  box-shadow:
+    0 28px 70px var(--about-glass-shadow),
+    inset 0 1px 0 var(--about-glass-highlight);
+}
+
+.about__eyebrow {
+  display: inline-block;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--about-eyebrow);
+  margin-bottom: 0.9rem;
+}
+
+.about__title {
+  font-size: clamp(1.6rem, 3vw, 2.25rem);
+  line-height: 1.25;
+  font-weight: 650;
+  letter-spacing: -0.01em;
+  margin: 0 0 1.1rem;
+  color: var(--about-text);
+}
+
+.about__text {
+  font-size: 1.02rem;
+  line-height: 1.65;
+  color: var(--about-text-muted);
+  margin: 0 0 1rem;
+  max-width: 56ch;
+}
+
+.about__stats {
+  display: flex;
+  gap: clamp(1.5rem, 4vw, 2.5rem);
+  margin-top: 2rem;
+  flex-wrap: wrap;
+}
+
+.about__stat {
+  display: flex;
+  flex-direction: column;
+}
+
+.about__stat-value {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--about-text);
+}
+
+.about__stat-label {
+  font-size: 0.82rem;
+  color: var(--about-text-muted);
+  margin-top: 0.2rem;
+}
+
+/* Skills panel */
+.about__skills {
+  height: fit-content;
+}
+
+.about__skill-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-top: 0.5rem;
+}
+
+.about__skill-pill {
+  padding: 0.5rem 1rem;
+  border-radius: 999px;
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: var(--about-pill-text);
+  background: var(--about-pill-bg);
+  border: 1px solid var(--about-pill-border);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transition:
+    transform 0.25s ease,
+    background 0.25s ease;
+}
+
+.about__skill-pill:hover {
+  transform: translateY(-2px);
+  background: var(--about-pill-border);
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .about__glass,
+  .about__skill-pill {
+    transition: none;
+  }
+  .about__glass:hover,
+  .about__skill-pill:hover {
+    transform: none;
+  }
+}
