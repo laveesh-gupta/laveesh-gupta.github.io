@@ -3,22 +3,27 @@ import "./About.css";
 const skills = [
   "React",
   "JavaScript",
-  "TypeScript",
+  "Node.js",
+  "HTML",
   "CSS3",
   "Next.js",
   "Tailwind CSS",
   "Redux",
-  "Node.js",
+  "Docker",
   "Git",
+  "Microservices",
   "REST APIs",
+  "GoCD (CI/CD)",
+  "MongoDB",
   "Figma",
   "Vite",
+  "Web Security",
+  "Accessibility",
 ];
 
 const stats = [
   { value: "4+", label: "Years Experience" },
-  { value: "40+", label: "Projects Shipped" },
-  { value: "15+", label: "Happy Clients" },
+  { value: "5+", label: "Projects Shipped" },
 ];
 
 export default function About() {
