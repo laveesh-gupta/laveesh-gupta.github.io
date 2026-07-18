@@ -23,6 +23,14 @@
   --hero-orb-1: rgba(88, 130, 255, 0.35);
   --hero-orb-2: rgba(255, 105, 180, 0.22);
 
+  /* Toggle track colours (dark mode defaults) */
+  --hero-toggle-track-bg: rgba(255, 255, 255, 0.1);
+  --hero-toggle-track-border: rgba(255, 255, 255, 0.18);
+  --hero-toggle-thumb-bg: #8ab4ff;
+  --hero-toggle-thumb-shadow: rgba(138, 180, 255, 0.45);
+  --hero-toggle-icon-color: rgba(245, 245, 247, 0.55);
+  --hero-toggle-icon-active: #f5f5f7;
+
   position: relative;
   overflow-x: clip;
   min-height: 100svh;
@@ -56,7 +64,101 @@
 
   --hero-orb-1: rgba(88, 130, 255, 0.25);
   --hero-orb-2: rgba(255, 105, 180, 0.2);
+
+  --hero-toggle-track-bg: rgba(0, 0, 0, 0.06);
+  --hero-toggle-track-border: rgba(0, 0, 0, 0.1);
+  --hero-toggle-thumb-bg: #2f6fed;
+  --hero-toggle-thumb-shadow: rgba(47, 111, 237, 0.35);
+  --hero-toggle-icon-color: rgba(29, 29, 31, 0.4);
+  --hero-toggle-icon-active: #1d1d1f;
 }
+
+/* ── Theme Toggle ── */
+
+.hero__theme-toggle {
+  position: absolute;
+  top: clamp(1rem, 3vw, 1.75rem);
+  right: clamp(1rem, 3vw, 1.75rem);
+  z-index: 10;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  line-height: 0;
+}
+
+.hero__theme-toggle-track {
+  display: block;
+  width: 68px;
+  height: 34px;
+  border-radius: 999px;
+  background: var(--hero-toggle-track-bg);
+  border: 1px solid var(--hero-toggle-track-border);
+  backdrop-filter: blur(12px) saturate(150%);
+  -webkit-backdrop-filter: blur(12px) saturate(150%);
+  box-shadow:
+    0 4px 16px rgba(0, 0, 0, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  position: relative;
+  transition:
+    background 0.35s ease,
+    border-color 0.35s ease;
+}
+
+/* sliding thumb — one icon lives inside it */
+.hero__theme-toggle-thumb {
+  position: absolute;
+  top: 50%;
+  left: 5px;
+  transform: translateY(-50%);
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--hero-toggle-thumb-bg);
+  box-shadow: 0 2px 8px var(--hero-toggle-thumb-shadow);
+  transition:
+    left 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
+    background 0.35s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+[data-theme="light"] .hero__theme-toggle-thumb {
+  left: 37px; /* 68 - 26 - 5 */
+}
+
+/* both icons always visible */
+.hero__theme-toggle-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* icon inside the circle thumb */
+.hero__theme-toggle-thumb .hero__theme-toggle-icon {
+  color: #fff;
+}
+
+/* icon outside the thumb, in the empty side of the track */
+.hero__theme-toggle-track > .hero__theme-toggle-icon {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--hero-toggle-icon-color);
+}
+
+.hero__theme-toggle-icon svg {
+  width: 15px;
+  height: 15px;
+}
+
+.hero__theme-toggle:focus-visible .hero__theme-toggle-track {
+  outline: 2px solid var(--hero-eyebrow);
+  outline-offset: 3px;
+}
+
+/* ── Ambient / Orbs ── */
 
 .hero__ambient {
   position: absolute;
@@ -86,6 +188,8 @@
   left: -100px;
   background: var(--hero-orb-2);
 }
+
+/* ── Content ── */
 
 .hero__container {
   position: relative;
@@ -133,7 +237,6 @@
   font-size: 0.8rem;
   font-weight: 600;
   letter-spacing: 0.08em;
-  /* text-transform: uppercase; */
   color: var(--hero-eyebrow);
   margin-bottom: 1rem;
 }
@@ -228,7 +331,8 @@
   .hero__cursor {
     animation: none;
   }
-  .hero__btn {
+  .hero__btn,
+  .hero__theme-toggle-thumb {
     transition: none;
   }
   .hero__btn:hover {
