@@ -346,10 +346,10 @@
 .hero__blob {
   position: absolute;
   top: 0;
-  left: clamp(1rem, 4vw, 2rem);
+  left: clamp(0.5rem, 3vw, 1.5rem);
 
-  width: clamp(84px, 12vw, 120px);
-  height: clamp(84px, 12vw, 120px);
+  width: clamp(80px, 11vw, 110px);
+  height: clamp(80px, 11vw, 110px);
 
   pointer-events: none;
   will-change: transform, opacity;
