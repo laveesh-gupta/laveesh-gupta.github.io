@@ -20,9 +20,6 @@
   --hero-btn-secondary-bg: rgba(255, 255, 255, 0.08);
   --hero-btn-secondary-border: rgba(255, 255, 255, 0.2);
 
-  --hero-orb-1: rgba(88, 130, 255, 0.35);
-  --hero-orb-2: rgba(255, 105, 180, 0.22);
-
   /* Toggle track colours (dark mode defaults) */
   --hero-toggle-track-bg: rgba(255, 255, 255, 0.1);
   --hero-toggle-track-border: rgba(255, 255, 255, 0.18);
@@ -61,9 +58,6 @@
   --hero-btn-primary-text: #f5f5f7;
   --hero-btn-secondary-bg: rgba(255, 255, 255, 0.55);
   --hero-btn-secondary-border: rgba(255, 255, 255, 0.8);
-
-  --hero-orb-1: rgba(88, 130, 255, 0.25);
-  --hero-orb-2: rgba(255, 105, 180, 0.2);
 
   --hero-toggle-track-bg: rgba(0, 0, 0, 0.06);
   --hero-toggle-track-border: rgba(0, 0, 0, 0.1);
@@ -156,37 +150,6 @@
 .hero__theme-toggle:focus-visible .hero__theme-toggle-track {
   outline: 2px solid var(--hero-eyebrow);
   outline-offset: 3px;
-}
-
-/* ── Ambient / Orbs ── */
-
-.hero__ambient {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-}
-
-.hero__orb {
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(120px);
-}
-
-.hero__orb--one {
-  width: 480px;
-  height: 480px;
-  top: -140px;
-  right: -100px;
-  background: var(--hero-orb-1);
-}
-
-.hero__orb--two {
-  width: 360px;
-  height: 360px;
-  bottom: -120px;
-  left: -100px;
-  background: var(--hero-orb-2);
 }
 
 /* ── Content ── */

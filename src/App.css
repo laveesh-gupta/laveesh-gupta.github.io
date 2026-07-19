@@ -39,3 +39,149 @@ body {
 ::selection {
   background: rgba(138, 180, 255, 0.35);
 }
+
+/* ============================================
+   Animated background blobs
+   ============================================ */
+
+.blob-container {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+/* All content above blobs */
+.app > *:not(.blob-container) {
+  position: relative;
+  z-index: 1;
+}
+
+.blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(120px);
+  opacity: 0.28;
+  will-change: transform;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+
+/* Dark theme blobs */
+.blob-1 {
+  width: 600px;
+  height: 600px;
+  top: -8%;
+  left: 22%;
+  background: radial-gradient(circle, #7c3aed, #4f46e5);
+  animation: blob-drift-1 18s ease-in-out infinite alternate;
+}
+
+.blob-2 {
+  width: 420px;
+  height: 420px;
+  top: 5%;
+  left: 2%;
+  background: radial-gradient(circle, #0ea5e9, #06b6d4);
+  animation: blob-drift-2 22s ease-in-out infinite alternate;
+}
+
+.blob-3 {
+  width: 500px;
+  height: 500px;
+  top: 72%;
+  left: 5%;
+  background: radial-gradient(circle, #ec4899, #8b5cf6);
+  animation: blob-drift-3 26s ease-in-out infinite alternate;
+}
+
+.blob-4 {
+  width: 380px;
+  height: 380px;
+  bottom: 2%;
+  right: 5%;
+  background: radial-gradient(circle, #10b981, #3b82f6);
+  animation: blob-drift-4 20s ease-in-out infinite alternate;
+}
+
+.blob-5 {
+  width: 320px;
+  height: 320px;
+  top: 5%;
+  right: 5%;
+  background: radial-gradient(circle, #f59e0b, #ef4444);
+  animation: blob-drift-5 24s ease-in-out infinite alternate;
+}
+
+/* Light theme — brighter, more saturated, slightly more opaque */
+[data-theme="light"] .blob {
+  opacity: 0.38;
+  filter: blur(90px);
+}
+
+[data-theme="light"] .blob-1 {
+  background: radial-gradient(circle, #a78bfa, #818cf8);
+}
+
+[data-theme="light"] .blob-2 {
+  background: radial-gradient(circle, #38bdf8, #22d3ee);
+}
+
+[data-theme="light"] .blob-3 {
+  background: radial-gradient(circle, #f472b6, #c084fc);
+}
+
+[data-theme="light"] .blob-4 {
+  background: radial-gradient(circle, #34d399, #60a5fa);
+}
+
+[data-theme="light"] .blob-5 {
+  background: radial-gradient(circle, #fbbf24, #f87171);
+}
+
+/* Keyframes — each blob drifts on its own path */
+@keyframes blob-drift-1 {
+  0%   { transform: translate(0, 0) scale(1); }
+  33%  { transform: translate(160px, 120px) scale(1.1); }
+  66%  { transform: translate(80px, 200px) scale(0.93); }
+  100% { transform: translate(200px, 80px) scale(1.07); }
+}
+
+@keyframes blob-drift-2 {
+  0%   { transform: translate(0, 0) scale(1); }
+  33%  { transform: translate(140px, 120px) scale(1.08); }
+  66%  { transform: translate(80px, 200px) scale(0.9); }
+  100% { transform: translate(160px, 100px) scale(1.12); }
+}
+
+@keyframes blob-drift-3 {
+  0%   { transform: translate(0, 0) scale(1); }
+  33%  { transform: translate(130px, -160px) scale(1.14); }
+  66%  { transform: translate(-80px, -100px) scale(0.88); }
+  100% { transform: translate(180px, -200px) scale(1.06); }
+}
+
+@keyframes blob-drift-4 {
+  0%   { transform: translate(0, 0) scale(1); }
+  33%  { transform: translate(-160px, -120px) scale(0.93); }
+  66%  { transform: translate(-60px, -220px) scale(1.1); }
+  100% { transform: translate(-200px, -100px) scale(1.04); }
+}
+
+@keyframes blob-drift-5 {
+  0%   { transform: translate(0, 0) scale(1); }
+  33%  { transform: translate(-120px, 100px) scale(1.12); }
+  66%  { transform: translate(-80px, 160px) scale(0.91); }
+  100% { transform: translate(-150px, 80px) scale(1.08); }
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .blob {
+    animation: none;
+  }
+}

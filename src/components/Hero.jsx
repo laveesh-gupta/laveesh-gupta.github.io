@@ -320,12 +320,6 @@ export default function Hero() {
   return (
     <section className="hero" id="hero">
       <ThemeSwitcher />
-
-      <div className="hero__ambient" aria-hidden="true">
-        <span className="hero__orb hero__orb--one" />
-        <span className="hero__orb hero__orb--two" />
-      </div>
-
       <div className="hero__container">
         <Blob />
         <div className="hero__glass">

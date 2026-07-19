@@ -29,11 +29,6 @@ const stats = [
 export default function About() {
   return (
     <section className="about" id="about">
-      <div className="about__ambient" aria-hidden="true">
-        <span className="about__orb about__orb--one" />
-        <span className="about__orb about__orb--two" />
-      </div>
-
       <div className="about__container">
         <div className="about__glass about__intro">
           <span className="about__eyebrow">About Me</span>

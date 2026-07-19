@@ -34,11 +34,6 @@ const projects = [
 export default function Projects() {
   return (
     <section className="projects" id="projects">
-      <div className="projects__ambient" aria-hidden="true">
-        <span className="projects__orb projects__orb--one" />
-        <span className="projects__orb projects__orb--two" />
-      </div>
-
       <div className="projects__container">
         <div className="projects__header">
           <span className="projects__eyebrow">My Work</span>

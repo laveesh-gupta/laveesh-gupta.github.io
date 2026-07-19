@@ -22,9 +22,6 @@
   --contact-btn-bg: #f5f5f7;
   --contact-btn-text: #0b0b0f;
 
-  --contact-orb-1: rgba(255, 105, 180, 0.22);
-  --contact-orb-2: rgba(88, 130, 255, 0.35);
-
   position: relative;
   overflow-x: clip;
   padding: clamp(4rem, 8vw, 8rem) clamp(1.25rem, 5vw, 4rem);
@@ -54,38 +51,6 @@
 
   --contact-btn-bg: #1d1d1f;
   --contact-btn-text: #f5f5f7;
-
-  --contact-orb-1: rgba(88, 130, 255, 0.22);
-  --contact-orb-2: rgba(255, 105, 180, 0.16);
-}
-
-.contact__ambient {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-}
-
-.contact__orb {
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(120px);
-}
-
-.contact__orb--one {
-  width: 360px;
-  height: 360px;
-  top: -80px;
-  left: -80px;
-  background: var(--contact-orb-1);
-}
-
-.contact__orb--two {
-  width: 380px;
-  height: 380px;
-  bottom: -120px;
-  right: 0;
-  background: var(--contact-orb-2);
 }
 
 .contact__container {

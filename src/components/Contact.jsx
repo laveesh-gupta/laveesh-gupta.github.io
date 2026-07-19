@@ -3,11 +3,6 @@ import "./Contact.css";
 export default function Contact() {
   return (
     <section className="contact" id="contact">
-      <div className="contact__ambient" aria-hidden="true">
-        <span className="contact__orb contact__orb--one" />
-        <span className="contact__orb contact__orb--two" />
-      </div>
-
       <div className="contact__container">
         <div className="contact__glass">
           <span className="contact__eyebrow">Get in Touch</span>
