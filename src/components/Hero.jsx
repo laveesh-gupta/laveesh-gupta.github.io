@@ -123,7 +123,7 @@ function Blob() {
 
   useEffect(() => {
     let isMounted = true;
-    
+
     const sequence = async () => {
       if (!isMounted) return;
 
@@ -137,11 +137,11 @@ function Blob() {
 
       // 3. Lean in and look down at the text
       setAnim("looking");
-      await new Promise((r) => setTimeout(r, 1400));
+      await new Promise((r) => setTimeout(r, 2000));
 
       // 4. Look up and smile big
       setAnim("smiling");
-      await new Promise((r) => setTimeout(r, 1400));
+      await new Promise((r) => setTimeout(r, 2000));
 
       // 5. Jump back up above the card
       setAnim("retreating");
@@ -151,7 +151,7 @@ function Blob() {
       setAnim("hidden");
     };
 
-    const interval = setInterval(sequence, 8000);
+    const interval = setInterval(sequence, 10000);
     setTimeout(sequence, 1000);
 
     return () => {
@@ -163,30 +163,31 @@ function Blob() {
   const isLooking = anim === "looking";
   const isSmiling = anim === "smiling";
 
-  // Base positions (adjusted slightly inward so bigger eyes don't clip the edge)
+  // Base positions
   let leftEyeX = 24;
   let rightEyeX = 34;
-  let eyeY = 16;
+  let eyeY = 15;
   let pupilXOffset = 0;
   let pupilYOffset = 0;
 
-  // Mouth path (must maintain the exact same M... Q... command structure)
-  let mouthPath = "M26 22 Q29 23 32 22"; // Neutral/Small
+  // Mouth path
+  let mouthPath = "M26 25 Q29 26 32 25"; // Neutral/Small
 
   if (isLooking) {
-    // Look down and to the RIGHT (at the card content)
-    leftEyeX = 27; 
-    rightEyeX = 37; 
-    eyeY = 22; 
-    pupilXOffset = 2; // Look right
-    pupilYOffset = 1.5;  // Look down
-    mouthPath = "M29 27 Q32 30 35 27"; // Shifted right and down
+    // Look down and to the RIGHT
+    leftEyeX = 27;
+    rightEyeX = 37;
+    eyeY = 20;
+    pupilXOffset = 2;
+    pupilYOffset = 1.5;
+    mouthPath = "M29 30 Q32 33 35 30";
   } else if (isSmiling) {
-    // Big happy smile, slightly squinched eyes
+    // Big happy smile
     eyeY = 15;
     pupilXOffset = 0.5;
     pupilYOffset = -0.5;
-    mouthPath = "M22 23 Q29 35 36 23"; // Wide smile
+    // Anchors moved to match the neutral state for a perfectly smooth morph
+    mouthPath = "M22 25 Q29 37 36 25";
   }
 
   // Calculate coordinates for pupils dynamically
@@ -198,33 +199,68 @@ function Blob() {
   return (
     <div className={`hero__blob hero__blob--${anim}`} aria-hidden="true">
       <svg viewBox="0 0 48 48" fill="none" className="hero__blob-svg">
-        
         {/* Flowy animated blob body - redesigned to be perfectly round at the top and bottom */}
         <path fill="var(--hero-eyebrow)" opacity="0.95">
-          <animate 
-            attributeName="d" 
-            dur="4s" 
-            repeatCount="indefinite" 
+          <animate
+            attributeName="d"
+            dur="4s"
+            repeatCount="indefinite"
             values="
               M 8 24 C 8 15, 15 8, 24 8 C 33 8, 40 15, 40 24 C 40 33, 33 40, 24 40 C 15 40, 8 33, 8 24 Z;
               M 6 24 C 6 14, 16 6, 26 6 C 36 6, 42 14, 42 24 C 42 34, 34 42, 24 42 C 14 42, 6 34, 6 24 Z;
               M 10 24 C 10 14, 14 6, 24 6 C 34 6, 38 14, 38 24 C 38 34, 32 42, 22 42 C 12 42, 10 34, 10 24 Z;
               M 8 24 C 8 15, 15 8, 24 8 C 33 8, 40 15, 40 24 C 40 33, 33 40, 24 40 C 15 40, 8 33, 8 24 Z
-            " 
+            "
           />
         </path>
 
         {/* Bigger Eyes */}
-        <circle cx={leftEyeX} cy={eyeY} r="4" fill="white" className="hero__blob-eye" />
-        <circle cx={rightEyeX} cy={eyeY} r="4" fill="white" className="hero__blob-eye" />
+        <circle
+          cx={leftEyeX}
+          cy={eyeY}
+          r="4"
+          fill="white"
+          className="hero__blob-eye"
+        />
+        <circle
+          cx={rightEyeX}
+          cy={eyeY}
+          r="4"
+          fill="white"
+          className="hero__blob-eye"
+        />
 
         {/* Bigger Pupils */}
-        <circle cx={leftPupilX} cy={leftPupilY} r="2.2" fill="#1d1d1f" className="hero__blob-eye" />
-        <circle cx={rightPupilX} cy={rightPupilY} r="2.2" fill="#1d1d1f" className="hero__blob-eye" />
-        
+        <circle
+          cx={leftPupilX}
+          cy={leftPupilY}
+          r="2.2"
+          fill="#1d1d1f"
+          className="hero__blob-eye"
+        />
+        <circle
+          cx={rightPupilX}
+          cy={rightPupilY}
+          r="2.2"
+          fill="#1d1d1f"
+          className="hero__blob-eye"
+        />
+
         {/* Slightly larger Sparkles (Catchlights) */}
-        <circle cx={leftPupilX - 0.7} cy={leftPupilY - 0.7} r="0.8" fill="white" className="hero__blob-eye" />
-        <circle cx={rightPupilX - 0.7} cy={rightPupilY - 0.7} r="0.8" fill="white" className="hero__blob-eye" />
+        <circle
+          cx={leftPupilX - 0.7}
+          cy={leftPupilY - 0.7}
+          r="0.8"
+          fill="white"
+          className="hero__blob-eye"
+        />
+        <circle
+          cx={rightPupilX - 0.7}
+          cy={rightPupilY - 0.7}
+          r="0.8"
+          fill="white"
+          className="hero__blob-eye"
+        />
 
         {/* Morphing Mouth */}
         <path
