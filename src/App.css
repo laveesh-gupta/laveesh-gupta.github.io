@@ -78,7 +78,7 @@ body {
   top: -8%;
   left: 22%;
   background: radial-gradient(circle, #7c3aed, #4f46e5);
-  animation: blob-drift-1 18s ease-in-out infinite alternate;
+  animation: blob-drift-1 13s ease-in-out infinite alternate;
 }
 
 .blob-2 {
@@ -87,7 +87,7 @@ body {
   top: 5%;
   left: 2%;
   background: radial-gradient(circle, #0ea5e9, #06b6d4);
-  animation: blob-drift-2 22s ease-in-out infinite alternate;
+  animation: blob-drift-2 15s ease-in-out infinite alternate;
 }
 
 .blob-3 {
@@ -96,7 +96,7 @@ body {
   top: 72%;
   left: 5%;
   background: radial-gradient(circle, #ec4899, #8b5cf6);
-  animation: blob-drift-3 26s ease-in-out infinite alternate;
+  animation: blob-drift-3 18s ease-in-out infinite alternate;
 }
 
 .blob-4 {
@@ -105,7 +105,7 @@ body {
   bottom: 2%;
   right: 5%;
   background: radial-gradient(circle, #10b981, #3b82f6);
-  animation: blob-drift-4 20s ease-in-out infinite alternate;
+  animation: blob-drift-4 14s ease-in-out infinite alternate;
 }
 
 .blob-5 {
@@ -114,7 +114,7 @@ body {
   top: 5%;
   right: 5%;
   background: radial-gradient(circle, #f59e0b, #ef4444);
-  animation: blob-drift-5 24s ease-in-out infinite alternate;
+  animation: blob-drift-5 16s ease-in-out infinite alternate;
 }
 
 /* Light theme — brighter, more saturated, slightly more opaque */
@@ -183,5 +183,99 @@ body {
 @media (prefers-reduced-motion: reduce) {
   .blob {
     animation: none;
+  }
+}
+
+/* ============================================
+   Mobile Adjustments for Blobs
+   ============================================ */
+
+@media (max-width: 768px) {
+  /* Balanced opacity and blur for vibrant yet non-blinding mobile view */
+  .blob {
+    opacity: 0.24;
+    filter: blur(90px);
+  }
+
+  [data-theme="light"] .blob {
+    opacity: 0.32;
+    filter: blur(80px);
+  }
+
+  /* Scale down blob dimensions & position them near edges */
+  .blob-1 {
+    width: 320px;
+    height: 320px;
+    top: -5%;
+    left: -15%;
+    animation-duration: 9s;
+  }
+
+  .blob-2 {
+    width: 280px;
+    height: 280px;
+    top: 18%;
+    left: -20%;
+    animation-duration: 10s;
+  }
+
+  .blob-3 {
+    width: 300px;
+    height: 300px;
+    top: 60%;
+    left: -15%;
+    animation-duration: 13s;
+  }
+
+  .blob-4 {
+    width: 260px;
+    height: 260px;
+    bottom: -2%;
+    right: -15%;
+    animation-duration: 11s;
+  }
+
+  .blob-5 {
+    width: 240px;
+    height: 240px;
+    top: 8%;
+    right: -15%;
+    animation-duration: 12s;
+  }
+
+  /* Keyframe offsets tailored for mobile width */
+  @keyframes blob-drift-1 {
+    0%   { transform: translate(0, 0) scale(1); }
+    33%  { transform: translate(40px, 30px) scale(1.05); }
+    66%  { transform: translate(20px, 50px) scale(0.95); }
+    100% { transform: translate(50px, 20px) scale(1.02); }
+  }
+
+  @keyframes blob-drift-2 {
+    0%   { transform: translate(0, 0) scale(1); }
+    33%  { transform: translate(35px, 30px) scale(1.05); }
+    66%  { transform: translate(20px, 50px) scale(0.92); }
+    100% { transform: translate(40px, 25px) scale(1.05); }
+  }
+
+  @keyframes blob-drift-3 {
+    0%   { transform: translate(0, 0) scale(1); }
+    33%  { transform: translate(30px, -40px) scale(1.05); }
+    66%  { transform: translate(-20px, -25px) scale(0.95); }
+    100% { transform: translate(40px, -50px) scale(1.02); }
+  }
+
+  @keyframes blob-drift-4 {
+    0%   { transform: translate(0, 0) scale(1); }
+    33%  { transform: translate(-40px, -30px) scale(0.95); }
+    66%  { transform: translate(-15px, -50px) scale(1.05); }
+    100% { transform: translate(-50px, -25px) scale(1.02); }
+  }
+
+  @keyframes blob-drift-5 {
+    0%   { transform: translate(0, 0) scale(1); }
+    33%  { transform: translate(-30px, 25px) scale(1.05); }
+    66%  { transform: translate(-20px, 40px) scale(0.95); }
+    100% { transform: translate(-40px, 20px) scale(1.03); }
   }
 }
