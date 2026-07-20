@@ -386,3 +386,48 @@
   opacity: 1;
   transform: translateY(-110%) scale(0.98, 1.04); /* Changed from 0.9 to 0.98 */
 }
+
+/* ── Scroll Arrow ── */
+
+.hero__scroll-arrow {
+  position: absolute;
+  bottom: clamp(1.5rem, 4vw, 2.5rem);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+}
+
+.hero__scroll-arrow-icon {
+  width: 40px;
+  height: 40px;
+  color: var(--hero-text-muted);
+  background: var(--hero-glass-bg);
+  border: 1px solid var(--hero-glass-border);
+  border-radius: 50%;
+  padding: 8px;
+  backdrop-filter: blur(12px) saturate(150%);
+  -webkit-backdrop-filter: blur(12px) saturate(150%);
+  box-shadow:
+    0 4px 16px var(--hero-glass-shadow),
+    inset 0 1px 0 var(--hero-glass-highlight);
+  animation: hero-scroll-bob 2.2s ease-in-out infinite;
+  transition: color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.hero__scroll-arrow-icon:hover {
+  color: var(--hero-eyebrow);
+  box-shadow:
+    0 8px 24px var(--hero-glass-shadow),
+    inset 0 1px 0 var(--hero-glass-highlight);
+}
+
+@keyframes hero-scroll-bob {
+  0%, 100% { transform: translateY(0) translateX(0); }
+  50%       { transform: translateY(6px) translateX(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero__scroll-arrow-icon {
+    animation: none;
+  }
+}

@@ -1,0 +1,269 @@
+/* ============================================
+   Experience Section — Apple-style Glassmorphism
+   ============================================ */
+
+.experience {
+  --exp-text: #f5f5f7;
+  --exp-text-muted: rgba(245, 245, 247, 0.68);
+  --exp-eyebrow: #8ab4ff;
+  --exp-glass-bg: rgba(255, 255, 255, 0.06);
+  --exp-glass-border: rgba(255, 255, 255, 0.14);
+  --exp-glass-shadow: rgba(0, 0, 0, 0.45);
+  --exp-glass-highlight: rgba(255, 255, 255, 0.35);
+  --exp-pill-bg: rgba(255, 255, 255, 0.08);
+  --exp-pill-border: rgba(255, 255, 255, 0.16);
+  --exp-pill-text: #f5f5f7;
+  --exp-divider: rgba(255, 255, 255, 0.1);
+
+  position: relative;
+  overflow-x: clip;
+  padding: clamp(4rem, 8vw, 8rem) clamp(1.25rem, 5vw, 4rem);
+  background: transparent;
+  color: var(--exp-text);
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI",
+    Roboto, sans-serif;
+}
+
+[data-theme="light"] .experience {
+  --exp-text: #1d1d1f;
+  --exp-text-muted: rgba(29, 29, 31, 0.62);
+  --exp-eyebrow: #2f6fed;
+  --exp-glass-bg: rgba(255, 255, 255, 0.5);
+  --exp-glass-border: rgba(255, 255, 255, 0.7);
+  --exp-glass-shadow: rgba(31, 38, 61, 0.14);
+  --exp-glass-highlight: rgba(255, 255, 255, 0.85);
+  --exp-pill-bg: rgba(255, 255, 255, 0.55);
+  --exp-pill-border: rgba(255, 255, 255, 0.8);
+  --exp-pill-text: #1d1d1f;
+  --exp-divider: rgba(0, 0, 0, 0.08);
+}
+
+/* Base Grid Layout */
+.experience__container {
+  position: relative;
+  z-index: 1;
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1.3fr;
+  gap: clamp(1.25rem, 3vw, 2rem);
+  align-items: stretch;
+}
+
+/* Glass panel */
+.experience__glass {
+  position: relative;
+  background: var(--exp-glass-bg);
+  border: 1px solid var(--exp-glass-border);
+  border-radius: 28px;
+  padding: clamp(1.75rem, 4vw, 2.75rem);
+  backdrop-filter: blur(24px) saturate(160%);
+  -webkit-backdrop-filter: blur(24px) saturate(160%);
+  box-shadow:
+    0 20px 60px var(--exp-glass-shadow),
+    inset 0 1px 0 var(--exp-glass-highlight);
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.experience__glass::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(135deg, var(--exp-glass-highlight), transparent 40%);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+/* Layout Assignments */
+.experience__timeline-container { order: 1; }
+.experience__toolbox-container {
+  order: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  min-height: 550px;
+  padding: 0; 
+}
+
+/* Responsive Overrides */
+@media (max-width: 980px) {
+  .experience__container { display: flex; flex-direction: column; }
+  .experience__toolbox-container { order: 1; min-height: 480px; }
+  .experience__timeline-container { order: 2; }
+}
+
+/* Eyebrow & Timeline Defaults */
+.experience__eyebrow {
+  display: inline-block;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--exp-eyebrow);
+  margin-bottom: 1.25rem;
+}
+.experience__timeline { display: flex; flex-direction: column; gap: 0; }
+.experience__entry { padding-bottom: 1.75rem; margin-bottom: 1.75rem; border-bottom: 1px solid var(--exp-divider); }
+.experience__entry:last-child { padding-bottom: 0; margin-bottom: 0; border-bottom: none; }
+.experience__entry-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; margin-bottom: 0.3rem; }
+.experience__role { font-size: 1.05rem; font-weight: 650; color: var(--exp-text); margin: 0; }
+.experience__period { font-size: 0.8rem; font-weight: 500; color: var(--exp-eyebrow); white-space: nowrap; margin-top: 0.15rem; }
+.experience__company { font-size: 0.88rem; font-weight: 500; color: var(--exp-text-muted); margin: 0 0 0.65rem; }
+.experience__desc { font-size: 0.95rem; line-height: 1.6; color: var(--exp-text-muted); margin: 0; }
+
+/* ============================================
+   Structured Mind Map Layout
+   ============================================ */
+
+/* Expanded container to ensure zero overlap */
+.toolbox__mindmap {
+  position: relative;
+  width: 600px;
+  height: 600px;
+  transition: transform 0.4s ease;
+  transform-origin: center center;
+}
+
+@media (max-width: 1200px) { .toolbox__mindmap { transform: scale(0.85); } }
+@media (max-width: 980px)  { .toolbox__mindmap { transform: scale(1); } }
+@media (max-width: 650px)  { .toolbox__mindmap { transform: scale(0.9); } }
+@media (max-width: 480px)  { .toolbox__mindmap { transform: scale(0.8); } }
+
+/* SVG Background Lines */
+.toolbox__connections {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.toolbox__connections line {
+  stroke: var(--exp-glass-border);
+  stroke-width: 0.4;
+  stroke-dasharray: 4 4;
+}
+
+/* Central "Toolbox" Orb - Dead Center */
+.toolbox__center-orb {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  background: var(--exp-glass-bg);
+  border: 1px solid var(--exp-glass-highlight);
+  box-shadow: 
+    0 0 30px var(--exp-glass-shadow), 
+    inset 0 0 15px var(--exp-glass-highlight);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+.toolbox__center-orb h3 {
+  margin: 0;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--exp-text);
+  background: linear-gradient(135deg, var(--exp-text), var(--exp-eyebrow));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Category Blocks - Ordered Containers */
+.toolbox__category-node {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  z-index: 5;
+  transform: translate(-50%, -50%);
+  animation: float-structured 4s ease-in-out infinite;
+}
+
+/* Pushed outward to prevent central orb overlap */
+.toolbox__category-node--backend  { left: 20%; top: 20%; animation-delay: 0s; }
+.toolbox__category-node--frontend { left: 80%; top: 20%; animation-delay: 1.5s; }
+.toolbox__category-node--tools    { left: 50%; top: 82%; animation-delay: 0.75s; }
+
+.toolbox__category-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--exp-eyebrow);
+  background: var(--exp-glass-bg);
+  padding: 0.4rem 0.8rem;
+  border-radius: 12px;
+  border: 1px solid var(--exp-glass-border);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  white-space: nowrap;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  z-index: 2;
+}
+
+/* Flexible Skill Wrapping */
+.toolbox__skills-flex {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem;
+  width: 200px; /* Restricts width so they naturally cluster around the label */
+}
+
+/* Tools container gets a bit more breathing room at the bottom */
+.toolbox__category-node--tools .toolbox__skills-flex {
+  width: 260px;
+}
+
+.toolbox__skills-flex .experience__skill-pill {
+  width: max-content;
+  padding: 0.4rem 0.9rem;
+  border-radius: 999px; /* Fully rounded */
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--exp-pill-text);
+  background: var(--exp-pill-bg);
+  border: 1px solid var(--exp-pill-border);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transition: background 0.3s ease, border-color 0.3s ease;
+}
+
+.experience__skill-pill:hover {
+  background: var(--exp-glass-highlight);
+  color: #1d1d1f;
+}
+
+/* Gentle Y-axis hover animation */
+@keyframes float-structured {
+  0%, 100% { transform: translate(-50%, -50%) translateY(0); }
+  50% { transform: translate(-50%, -50%) translateY(-6px); }
+}
+
+/* Pause animation on container hover */
+.toolbox__mindmap:hover .toolbox__category-node {
+  animation-play-state: paused;
+}
+
+/* Reduced motion constraint */
+@media (prefers-reduced-motion: reduce) {
+  .toolbox__category-node { animation: none !important; }
+}

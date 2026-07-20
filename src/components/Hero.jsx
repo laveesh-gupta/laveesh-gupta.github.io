@@ -276,6 +276,27 @@ function Blob() {
   );
 }
 
+function ScrollArrow() {
+  return (
+    <div className="hero__scroll-arrow" aria-hidden="true">
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        className="hero__scroll-arrow-icon"
+      >
+        <path
+          d="M12 5v14M5 12l7 7 7-7"
+          stroke="currentColor"
+          strokeWidth="1.75"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </svg>
+    </div>
+  );
+}
+
 export default function Hero() {
   const [roleIndex, setRoleIndex] = useState(0);
   const [text, setText] = useState("");
@@ -353,6 +374,7 @@ export default function Hero() {
           </div>
         </div>
       </div>
+      <ScrollArrow />
     </section>
   );
 }
