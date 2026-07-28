@@ -4,6 +4,7 @@ import About from "./components/About";
 import Experience from "./components/Experience";
 import Projects from "./components/Projects";
 import Contact from "./components/Contact";
+import { useEffect } from "react";
 
 function App() {
   console.log(
@@ -13,6 +14,21 @@ function App() {
   console.log(
     "Since you're digging around in the console, you might be the kind of developer I want to work with. Let's chat!",
   );
+
+  useEffect(() => {
+    const splash = document.getElementById("initial-splash");
+    if (splash) {
+      splash.style.opacity = "0";
+      splash.style.visibility = "hidden";
+
+      const timer = setTimeout(() => {
+        splash.remove();
+      }, 2000);
+
+      return () => clearTimeout(timer);
+    }
+  }, []);
+
   return (
     <main className="app">
       <div className="blob-container" aria-hidden="true">
