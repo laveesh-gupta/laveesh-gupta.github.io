@@ -2,31 +2,17 @@ import "./Projects.css";
 
 const projects = [
   {
-    title: "E-Commerce Dashboard",
+    title: "MedScan",
     description:
-      "A React + TypeScript admin dashboard with real-time analytics, order management, and inventory tracking.",
-    tags: ["React", "TypeScript", "Redux"],
+      "Architected a Hyperledger Fabric blockchain based drug supply chain platform using Node.js, MongoDB, and React.js, featuring real-time QR code verification and JWT authentication to prevent counterfeiting.",
+    tags: ["React", "Node.js", "Blockchain"],
     link: "#",
   },
   {
-    title: "Recipe Finder App",
+    title: "EdgeVision",
     description:
-      "A responsive app that lets users search recipes by ingredients, save favorites, and plan weekly meals.",
-    tags: ["React", "Tailwind CSS", "REST API"],
-    link: "#",
-  },
-  {
-    title: "Task Management Tool",
-    description:
-      "A drag-and-drop kanban board with team collaboration, deadlines, and notification support.",
-    tags: ["Next.js", "Node.js", "MongoDB"],
-    link: "#",
-  },
-  {
-    title: "Portfolio Builder",
-    description:
-      "A no-code tool that lets creatives assemble and publish a personal portfolio site in minutes.",
-    tags: ["React", "Vite", "Firebase"],
+      "Engineered an edge-computing facial recognition system using TensorFlow.js and Flask with AES-256 encryption, delivering secure, low-latency, and anti-spoofing identity verification without cloud dependency.",
+    tags: ["React", "Python", "TensorFlow.js", "Flask"],
     link: "#",
   },
 ];

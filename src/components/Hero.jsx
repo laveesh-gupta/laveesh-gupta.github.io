@@ -1,17 +1,33 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import "./Hero.css";
 
 const ROLES = [
-  "Frontend Developer",
-  "React Developer",
-  "UI Engineer",
-  "Creative Coder",
+  { label: "Frontend Developer", color: "#8ab4ff" },
+  { label: "React Developer",    color: "#a78bfa" },
+  { label: "UI Engineer",        color: "#34d399" },
+  { label: "Creative Coder",     color: "#fb923c" },
 ];
 
-const TYPE_SPEED = 90;
-const DELETE_SPEED = 45;
-const HOLD_TIME = 1400;
+const ROLE_LIGHT_COLORS = {
+  "#8ab4ff": "#2f6fed",
+  "#a78bfa": "#7c3aed",
+  "#34d399": "#059669",
+  "#fb923c": "#ea580c",
+};
 
+const BLOB_QUIPS = [
+  "nice portfolio ✨",
+  "hire me? 👀",
+  "boo! 👻",
+  "let's build! 🚀",
+  "i like it here 🥹",
+];
+
+const TYPE_SPEED   = 90;
+const DELETE_SPEED = 45;
+const HOLD_TIME    = 1400;
+
+/* ─── Theme Switcher ─── */
 function ThemeSwitcher() {
   const [theme, setTheme] = useState(() => {
     if (typeof window !== "undefined") {
@@ -33,47 +49,30 @@ function ThemeSwitcher() {
       aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
     >
       <span className="hero__theme-toggle-track">
-        {/* Circle thumb — carries the active-theme icon */}
         <span className="hero__theme-toggle-thumb">
           <span className="hero__theme-toggle-icon" aria-hidden="true">
             {theme === "dark" ? (
-              <svg
-                viewBox="0 0 20 20"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M16.5 11.5A7 7 0 0 1 8.5 3.5a7 7 0 1 0 8 8z"
-                  fill="currentColor"
-                />
+              <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M16.5 11.5A7 7 0 0 1 8.5 3.5a7 7 0 1 0 8 8z" fill="currentColor" />
               </svg>
             ) : (
-              <svg
-                viewBox="0 0 20 20"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
+              <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <circle cx="10" cy="10" r="3.5" fill="currentColor" />
-                <g
-                  stroke="currentColor"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                >
-                  <line x1="10" y1="1.5" x2="10" y2="3.5" />
+                <g stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
+                  <line x1="10" y1="1.5"  x2="10" y2="3.5"  />
                   <line x1="10" y1="16.5" x2="10" y2="18.5" />
-                  <line x1="1.5" y1="10" x2="3.5" y2="10" />
+                  <line x1="1.5"  y1="10" x2="3.5"  y2="10" />
                   <line x1="16.5" y1="10" x2="18.5" y2="10" />
-                  <line x1="4.1" y1="4.1" x2="5.5" y2="5.5" />
+                  <line x1="4.1"  y1="4.1"  x2="5.5"  y2="5.5"  />
                   <line x1="14.5" y1="14.5" x2="15.9" y2="15.9" />
-                  <line x1="15.9" y1="4.1" x2="14.5" y2="5.5" />
-                  <line x1="5.5" y1="14.5" x2="4.1" y2="15.9" />
+                  <line x1="15.9" y1="4.1"  x2="14.5" y2="5.5"  />
+                  <line x1="5.5"  y1="14.5" x2="4.1"  y2="15.9" />
                 </g>
               </svg>
             )}
           </span>
         </span>
 
-        {/* Opposite icon sits on the empty side of the track */}
         <span
           className="hero__theme-toggle-icon"
           aria-hidden="true"
@@ -83,33 +82,22 @@ function ThemeSwitcher() {
           }}
         >
           {theme === "dark" ? (
-            <svg
-              viewBox="0 0 20 20"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
+            <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
               <circle cx="10" cy="10" r="3.5" fill="currentColor" />
               <g stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
-                <line x1="10" y1="1.5" x2="10" y2="3.5" />
+                <line x1="10" y1="1.5"  x2="10" y2="3.5"  />
                 <line x1="10" y1="16.5" x2="10" y2="18.5" />
-                <line x1="1.5" y1="10" x2="3.5" y2="10" />
+                <line x1="1.5"  y1="10" x2="3.5"  y2="10" />
                 <line x1="16.5" y1="10" x2="18.5" y2="10" />
-                <line x1="4.1" y1="4.1" x2="5.5" y2="5.5" />
+                <line x1="4.1"  y1="4.1"  x2="5.5"  y2="5.5"  />
                 <line x1="14.5" y1="14.5" x2="15.9" y2="15.9" />
-                <line x1="15.9" y1="4.1" x2="14.5" y2="5.5" />
-                <line x1="5.5" y1="14.5" x2="4.1" y2="15.9" />
+                <line x1="15.9" y1="4.1"  x2="14.5" y2="5.5"  />
+                <line x1="5.5"  y1="14.5" x2="4.1"  y2="15.9" />
               </g>
             </svg>
           ) : (
-            <svg
-              viewBox="0 0 20 20"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M16.5 11.5A7 7 0 0 1 8.5 3.5a7 7 0 1 0 8 8z"
-                fill="currentColor"
-              />
+            <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M16.5 11.5A7 7 0 0 1 8.5 3.5a7 7 0 1 0 8 8z" fill="currentColor" />
             </svg>
           )}
         </span>
@@ -118,36 +106,50 @@ function ThemeSwitcher() {
   );
 }
 
+/* ─── Blob ─── */
 function Blob() {
-  const [anim, setAnim] = useState("hidden");
+  const [anim, setAnim]       = useState("hidden");
+  const [quip, setQuip]       = useState("");
+  const [showQuip, setShowQuip] = useState(false);
+  const reducedMotion = typeof window !== "undefined"
+    ? window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    : false;
 
   useEffect(() => {
+    if (reducedMotion) {
+      setAnim("smiling");
+      return;
+    }
+
     let isMounted = true;
+    let quipIndex = 0;
 
     const sequence = async () => {
       if (!isMounted) return;
 
-      // 1. Rise up from behind the card
       setAnim("rising");
       await new Promise((r) => setTimeout(r, 600));
 
-      // 2. Fall down to the front of the card
       setAnim("front");
       await new Promise((r) => setTimeout(r, 500));
 
-      // 3. Lean in and look down at the text
       setAnim("looking");
       await new Promise((r) => setTimeout(r, 2000));
 
-      // 4. Look up and smile big
-      setAnim("smiling");
-      await new Promise((r) => setTimeout(r, 2000));
+      // Show speech bubble quip
+      setQuip(BLOB_QUIPS[quipIndex % BLOB_QUIPS.length]);
+      quipIndex++;
+      setShowQuip(true);
 
-      // 5. Jump back up above the card
+      setAnim("smiling");
+      await new Promise((r) => setTimeout(r, 1600));
+
+      setShowQuip(false);
+      await new Promise((r) => setTimeout(r, 400));
+
       setAnim("retreating");
       await new Promise((r) => setTimeout(r, 500));
 
-      // 6. Drop back down behind the card
       setAnim("hidden");
     };
 
@@ -158,48 +160,37 @@ function Blob() {
       isMounted = false;
       clearInterval(interval);
     };
-  }, []);
+  }, [reducedMotion]);
 
   const isLooking = anim === "looking";
   const isSmiling = anim === "smiling";
 
-  // Base positions
-  let leftEyeX = 24;
-  let rightEyeX = 34;
-  let eyeY = 15;
-  let pupilXOffset = 0;
-  let pupilYOffset = 0;
-
-  // Mouth path
-  let mouthPath = "M26 25 Q29 26 32 25"; // Neutral/Small
+  let leftEyeX = 24, rightEyeX = 34, eyeY = 15;
+  let pupilXOffset = 0, pupilYOffset = 0;
+  let mouthPath = "M26 25 Q29 26 32 25";
 
   if (isLooking) {
-    // Look down and to the RIGHT
-    leftEyeX = 27;
-    rightEyeX = 37;
-    eyeY = 20;
-    pupilXOffset = 2;
-    pupilYOffset = 1.5;
+    leftEyeX = 27; rightEyeX = 37; eyeY = 20;
+    pupilXOffset = 2; pupilYOffset = 1.5;
     mouthPath = "M29 30 Q32 33 35 30";
   } else if (isSmiling) {
-    // Big happy smile
-    eyeY = 15;
-    pupilXOffset = 0.5;
-    pupilYOffset = -0.5;
-    // Anchors moved to match the neutral state for a perfectly smooth morph
+    eyeY = 15; pupilXOffset = 0.5; pupilYOffset = -0.5;
     mouthPath = "M22 25 Q29 37 36 25";
   }
 
-  // Calculate coordinates for pupils dynamically
-  const leftPupilX = leftEyeX + pupilXOffset;
-  const leftPupilY = eyeY + pupilYOffset;
+  const leftPupilX  = leftEyeX  + pupilXOffset;
+  const leftPupilY  = eyeY      + pupilYOffset;
   const rightPupilX = rightEyeX + pupilXOffset;
-  const rightPupilY = eyeY + pupilYOffset;
+  const rightPupilY = eyeY      + pupilYOffset;
 
   return (
     <div className={`hero__blob hero__blob--${anim}`} aria-hidden="true">
+      {/* Speech bubble */}
+      <div className={`hero__blob-bubble${showQuip ? " hero__blob-bubble--visible" : ""}`}>
+        {quip}
+      </div>
+
       <svg viewBox="0 0 48 48" fill="none" className="hero__blob-svg">
-        {/* Flowy animated blob body - redesigned to be perfectly round at the top and bottom */}
         <path fill="var(--hero-eyebrow)" opacity="0.95">
           <animate
             attributeName="d"
@@ -214,55 +205,13 @@ function Blob() {
           />
         </path>
 
-        {/* Bigger Eyes */}
-        <circle
-          cx={leftEyeX}
-          cy={eyeY}
-          r="4"
-          fill="white"
-          className="hero__blob-eye"
-        />
-        <circle
-          cx={rightEyeX}
-          cy={eyeY}
-          r="4"
-          fill="white"
-          className="hero__blob-eye"
-        />
+        <circle cx={leftEyeX}  cy={eyeY} r="4"   fill="white" className="hero__blob-eye" />
+        <circle cx={rightEyeX} cy={eyeY} r="4"   fill="white" className="hero__blob-eye" />
+        <circle cx={leftPupilX}  cy={leftPupilY}  r="2.2" fill="#1d1d1f" className="hero__blob-eye" />
+        <circle cx={rightPupilX} cy={rightPupilY} r="2.2" fill="#1d1d1f" className="hero__blob-eye" />
+        <circle cx={leftPupilX  - 0.7} cy={leftPupilY  - 0.7} r="0.8" fill="white" className="hero__blob-eye" />
+        <circle cx={rightPupilX - 0.7} cy={rightPupilY - 0.7} r="0.8" fill="white" className="hero__blob-eye" />
 
-        {/* Bigger Pupils */}
-        <circle
-          cx={leftPupilX}
-          cy={leftPupilY}
-          r="2.2"
-          fill="#1d1d1f"
-          className="hero__blob-eye"
-        />
-        <circle
-          cx={rightPupilX}
-          cy={rightPupilY}
-          r="2.2"
-          fill="#1d1d1f"
-          className="hero__blob-eye"
-        />
-
-        {/* Slightly larger Sparkles (Catchlights) */}
-        <circle
-          cx={leftPupilX - 0.7}
-          cy={leftPupilY - 0.7}
-          r="0.8"
-          fill="white"
-          className="hero__blob-eye"
-        />
-        <circle
-          cx={rightPupilX - 0.7}
-          cy={rightPupilY - 0.7}
-          r="0.8"
-          fill="white"
-          className="hero__blob-eye"
-        />
-
-        {/* Morphing Mouth */}
         <path
           d={mouthPath}
           className="hero__blob-mouth"
@@ -276,9 +225,22 @@ function Blob() {
   );
 }
 
+/* ─── Scroll Arrow ─── */
 function ScrollArrow() {
+  const [visible, setVisible] = useState(true);
+
+  useEffect(() => {
+    const onScroll = () => setVisible(window.scrollY < 60);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
   return (
-    <div className="hero__scroll-arrow" aria-hidden="true">
+    <div
+      className="hero__scroll-arrow"
+      aria-hidden="true"
+      style={{ opacity: visible ? 1 : 0, transition: "opacity 0.4s ease" }}
+    >
       <svg
         viewBox="0 0 24 24"
         fill="none"
@@ -297,20 +259,65 @@ function ScrollArrow() {
   );
 }
 
+/* ─── Hero ─── */
 export default function Hero() {
   const [roleIndex, setRoleIndex] = useState(0);
-  const [text, setText] = useState("");
-  const [phase, setPhase] = useState("typing"); // typing | holding | deleting
-  const timeoutRef = useRef(null);
+  const [text, setText]           = useState("");
+  const [phase, setPhase]         = useState("typing");
+  const [mounted, setMounted]     = useState(false);
+  const timeoutRef  = useRef(null);
+  const glassRef    = useRef(null);
+  const tiltFrameRef = useRef(null);
 
+  /* #1 — Staggered entrance */
   useEffect(() => {
-    const current = ROLES[roleIndex];
+    const t = setTimeout(() => setMounted(true), 60);
+    return () => clearTimeout(t);
+  }, []);
 
+  /* #4 — Role color on CSS variable */
+  const currentRole = ROLES[roleIndex];
+  useEffect(() => {
+    const root = document.documentElement;
+    const isDark = root.getAttribute("data-theme") !== "light";
+    const color  = isDark ? currentRole.color : (ROLE_LIGHT_COLORS[currentRole.color] ?? currentRole.color);
+    root.style.setProperty("--hero-eyebrow-dynamic", color);
+  }, [roleIndex]);
+
+  /* #2 — Card tilt on mousemove */
+  const handleMouseMove = useCallback((e) => {
+    if (!glassRef.current) return;
+    cancelAnimationFrame(tiltFrameRef.current);
+    tiltFrameRef.current = requestAnimationFrame(() => {
+      const rect   = glassRef.current.getBoundingClientRect();
+      const cx     = rect.left + rect.width  / 2;
+      const cy     = rect.top  + rect.height / 2;
+      const dx     = (e.clientX - cx) / (rect.width  / 2);
+      const dy     = (e.clientY - cy) / (rect.height / 2);
+      const rotX   = (-dy * 5).toFixed(2);
+      const rotY   = ( dx * 5).toFixed(2);
+      const shiftX = (dx * 6).toFixed(1);
+      const shiftY = (dy * 6).toFixed(1);
+      glassRef.current.style.transform =
+        `perspective(900px) rotateX(${rotX}deg) rotateY(${rotY}deg)`;
+      glassRef.current.style.setProperty("--highlight-x", `${50 + dx * 20}%`);
+      glassRef.current.style.setProperty("--highlight-y", `${50 + dy * 20}%`);
+    });
+  }, []);
+
+  const handleMouseLeave = useCallback(() => {
+    cancelAnimationFrame(tiltFrameRef.current);
+    if (glassRef.current) {
+      glassRef.current.style.transform = "perspective(900px) rotateX(0deg) rotateY(0deg)";
+    }
+  }, []);
+
+  /* Typewriter */
+  useEffect(() => {
+    const current = currentRole.label;
     if (phase === "typing") {
       if (text.length < current.length) {
-        timeoutRef.current = setTimeout(() => {
-          setText(current.slice(0, text.length + 1));
-        }, TYPE_SPEED);
+        timeoutRef.current = setTimeout(() => setText(current.slice(0, text.length + 1)), TYPE_SPEED);
       } else {
         timeoutRef.current = setTimeout(() => setPhase("holding"), HOLD_TIME);
       }
@@ -318,63 +325,110 @@ export default function Hero() {
       timeoutRef.current = setTimeout(() => setPhase("deleting"), 0);
     } else if (phase === "deleting") {
       if (text.length > 0) {
-        timeoutRef.current = setTimeout(() => {
-          setText(current.slice(0, text.length - 1));
-        }, DELETE_SPEED);
+        timeoutRef.current = setTimeout(() => setText(current.slice(0, text.length - 1)), DELETE_SPEED);
       } else {
         setRoleIndex((i) => (i + 1) % ROLES.length);
         setPhase("typing");
       }
     }
-
     return () => clearTimeout(timeoutRef.current);
-  }, [text, phase, roleIndex]);
+  }, [text, phase, roleIndex, currentRole.label]);
 
-  const scrollToContact = () => {
-    document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
-  };
-
-  const scrollToProjects = () => {
-    document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" });
-  };
+  const scrollToContact  = () => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
+  const scrollToProjects = () => document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" });
 
   return (
     <section className="hero" id="hero">
       <ThemeSwitcher />
+
+      {/* #5 — Available badge */}
+      <div className={`hero__available${mounted ? " hero__available--in" : ""}`} aria-label="Available for work">
+        <span className="hero__available-dot" aria-hidden="true" />
+        Available for work
+      </div>
+
       <div className="hero__container">
         <Blob />
-        <div className="hero__glass">
-          <span className="hero__eyebrow">Hi there! 👋🏻</span>
-          <p className="hero__text">I am</p>
-          <h1 className="hero__name">Laveesh Gupta</h1>
-          <p className="hero__role">
-            a <span className="hero__role-text">{text}</span>
-            <span className="hero__cursor" aria-hidden="true">
-              |
+
+        {/* #2 — Tiltable glass card */}
+        <div
+          className={`hero__glass${mounted ? " hero__glass--in" : ""}`}
+          ref={glassRef}
+          onMouseMove={handleMouseMove}
+          onMouseLeave={handleMouseLeave}
+        >
+          {/* #1 — Staggered children */}
+          <span className="hero__eyebrow hero__anim hero__anim--1">Hi there! 👋🏻</span>
+          <p   className="hero__text    hero__anim hero__anim--2">I am</p>
+          <h1  className="hero__name    hero__anim hero__anim--3">Laveesh Gupta</h1>
+          <p   className="hero__role    hero__anim hero__anim--4">
+            a{" "}
+            <span
+              className="hero__role-text"
+              style={{ color: "var(--hero-eyebrow-dynamic, var(--hero-eyebrow))", transition: "color 0.45s ease" }}
+            >
+              {text}
             </span>
+            <span className="hero__cursor" aria-hidden="true">|</span>
           </p>
-          <p className="hero__text">
+          <p className="hero__text hero__anim hero__anim--5">
             I design and build clean, performant web experiences with a focus on
             detail, motion, and usability.
           </p>
 
-          <div className="hero__actions">
-            <button
-              className="hero__btn hero__btn--primary"
-              onClick={scrollToProjects}
-            >
+          <div className="hero__actions hero__anim hero__anim--6">
+            {/* #3 — Magnetic primary button */}
+            <MagneticButton className="hero__btn hero__btn--primary" onClick={scrollToProjects}>
               View Projects
-            </button>
-            <button
-              className="hero__btn hero__btn--secondary"
-              onClick={scrollToContact}
-            >
+            </MagneticButton>
+            <button className="hero__btn hero__btn--secondary" onClick={scrollToContact}>
               Get in Touch
             </button>
           </div>
         </div>
       </div>
+
       <ScrollArrow />
     </section>
+  );
+}
+
+/* ─── Magnetic Button (#3) ─── */
+function MagneticButton({ className, onClick, children }) {
+  const btnRef = useRef(null);
+  const frameRef = useRef(null);
+  const reducedMotion = typeof window !== "undefined"
+    ? window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    : false;
+
+  const handleMove = useCallback((e) => {
+    if (reducedMotion || !btnRef.current) return;
+    cancelAnimationFrame(frameRef.current);
+    frameRef.current = requestAnimationFrame(() => {
+      const rect = btnRef.current.getBoundingClientRect();
+      const cx   = rect.left + rect.width  / 2;
+      const cy   = rect.top  + rect.height / 2;
+      const dx   = ((e.clientX - cx) / (rect.width  / 2)) * 7;
+      const dy   = ((e.clientY - cy) / (rect.height / 2)) * 7;
+      btnRef.current.style.transform = `translate(${dx.toFixed(1)}px, ${dy.toFixed(1)}px)`;
+    });
+  }, [reducedMotion]);
+
+  const handleLeave = useCallback(() => {
+    cancelAnimationFrame(frameRef.current);
+    if (btnRef.current) btnRef.current.style.transform = "translate(0,0)";
+  }, []);
+
+  return (
+    <button
+      ref={btnRef}
+      className={className}
+      onClick={onClick}
+      onMouseMove={handleMove}
+      onMouseLeave={handleLeave}
+      style={{ transition: "transform 0.35s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.25s ease, background 0.25s ease" }}
+    >
+      {children}
+    </button>
   );
 }

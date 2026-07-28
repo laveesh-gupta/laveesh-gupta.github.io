@@ -21,22 +21,22 @@ const mindMapNodes = [
 
 const experiences = [
   {
-    role: "Frontend Developer",
-    company: "Acme Corp",
+    role: "Developer",
+    company: "IDFC FIRST Bank",
     period: "2022 – Present",
-    desc: "Built and maintained React-based dashboards serving 50k+ users. Led the migration from CRA to Vite, cutting build times by 70%.",
+    desc: "Led frontend development of scalable React SPAs, cutting onboarding time by 40% and boosting performance by 35% for 10K+ daily users.",
   },
   {
-    role: "UI Engineer",
-    company: "Startup XYZ",
-    period: "2020 – 2022",
-    desc: "Designed and shipped a component library used across three products. Introduced accessibility audits into the CI pipeline.",
+    role: "Tech Intern",
+    company: "Unisys",
+    period: "2021",
+    desc: "Migrated the legacy C++ MCP System Log Analyzer to a modern architecture, achieving platform independence and seamless cross-functional integration.",
   },
   {
-    role: "Junior Developer",
-    company: "Agency ABC",
-    period: "2019 – 2020",
-    desc: "Delivered responsive marketing sites and internal tools with React and vanilla CSS. First exposure to REST API integration.",
+    role: "Machine Learning Research Intern",
+    company: "Samsung SRIB",
+    period: "2020",
+    desc: "Enhanced Bixby's recommendation models with collaborative filtering and location-based logic, boosting user engagement and retention by 15%.",
   },
 ];
 
