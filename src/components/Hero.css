@@ -26,12 +26,6 @@
   --hero-toggle-icon-color: rgba(245, 245, 247, 0.55);
   --hero-toggle-icon-active: #f5f5f7;
 
-  /* Available badge colours */
-  --hero-badge-bg: rgba(52, 211, 153, 0.1);
-  --hero-badge-border: rgba(52, 211, 153, 0.25);
-  --hero-badge-text: #6ee7b7;
-  --hero-badge-dot: #34d399;
-
   position: relative;
   overflow-x: clip;
   min-height: 100svh;
@@ -70,10 +64,6 @@
   --hero-toggle-icon-color: rgba(29, 29, 31, 0.4);
   --hero-toggle-icon-active: #1d1d1f;
 
-  --hero-badge-bg: rgba(5, 150, 105, 0.08);
-  --hero-badge-border: rgba(5, 150, 105, 0.2);
-  --hero-badge-text: #047857;
-  --hero-badge-dot: #059669;
 }
 
 /* ── Theme Toggle ── */
@@ -155,52 +145,6 @@
   outline-offset: 3px;
 }
 
-/* ── #5 — Available for work badge ── */
-
-.hero__available {
-  position: absolute;
-  top: clamp(1rem, 3vw, 1.75rem);
-  left: clamp(1rem, 3vw, 1.75rem);
-  z-index: 10;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.45rem;
-  padding: 0.4rem 0.9rem 0.4rem 0.65rem;
-  border-radius: 999px;
-  background: var(--hero-badge-bg);
-  border: 1px solid var(--hero-badge-border);
-  color: var(--hero-badge-text);
-  font-size: 0.78rem;
-  font-weight: 600;
-  letter-spacing: 0.02em;
-  backdrop-filter: blur(12px) saturate(140%);
-  -webkit-backdrop-filter: blur(12px) saturate(140%);
-
-  /* entrance */
-  opacity: 0;
-  transform: translateY(-8px);
-  transition: opacity 0.5s ease, transform 0.5s ease;
-}
-
-.hero__available--in {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.hero__available-dot {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: var(--hero-badge-dot);
-  flex-shrink: 0;
-  animation: badge-pulse 2s ease-in-out infinite;
-}
-
-@keyframes badge-pulse {
-  0%, 100% { box-shadow: 0 0 0 0 var(--hero-badge-dot); opacity: 1; }
-  60%       { box-shadow: 0 0 0 5px transparent;          opacity: 0.8; }
-}
-
 /* ── Content ── */
 
 .hero__container {
@@ -227,19 +171,16 @@
   text-align: center;
   will-change: transform;
   transform-style: preserve-3d;
-  transition: transform 0.55s cubic-bezier(0.23, 1, 0.32, 1);
 
   /* entrance */
   opacity: 0;
   transform: perspective(900px) translateY(24px);
+  transition: opacity 0.6s ease, transform 0.55s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
 .hero__glass--in {
   opacity: 1;
   transform: perspective(900px) translateY(0) rotateX(0deg) rotateY(0deg);
-  transition:
-    opacity 0.6s ease,
-    transform 0.55s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
 /* Base gradient border */
@@ -261,21 +202,6 @@
   mask-composite: exclude;
   opacity: 0.6;
   pointer-events: none;
-}
-
-/* #2 — Dynamic specular highlight that follows cursor */
-.hero__glass::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  background: radial-gradient(
-    circle at var(--highlight-x, 50%) var(--highlight-y, 30%),
-    rgba(255,255,255,0.08) 0%,
-    transparent 65%
-  );
-  pointer-events: none;
-  transition: background 0.1s ease;
 }
 
 /* ── #1 — Staggered entrance animations ── */
@@ -512,7 +438,6 @@
   .hero__theme-toggle-thumb    { transition: none; }
   .hero__btn:hover             { transform: none; }
   .hero__scroll-arrow-icon     { animation: none; }
-  .hero__available-dot         { animation: none; }
   .hero__glass--in .hero__anim { animation: none; opacity: 1; transform: none; }
   .hero__glass                 { transition: none !important; transform: none !important; }
 }

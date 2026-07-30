@@ -265,8 +265,8 @@ export default function Hero() {
   const [text, setText]           = useState("");
   const [phase, setPhase]         = useState("typing");
   const [mounted, setMounted]     = useState(false);
-  const timeoutRef  = useRef(null);
-  const glassRef    = useRef(null);
+  const timeoutRef   = useRef(null);
+  const glassRef     = useRef(null);
   const tiltFrameRef = useRef(null);
 
   /* #1 — Staggered entrance */
@@ -284,24 +284,20 @@ export default function Hero() {
     root.style.setProperty("--hero-eyebrow-dynamic", color);
   }, [roleIndex]);
 
-  /* #2 — Card tilt on mousemove */
+  /* Card tilt on mousemove */
   const handleMouseMove = useCallback((e) => {
     if (!glassRef.current) return;
     cancelAnimationFrame(tiltFrameRef.current);
     tiltFrameRef.current = requestAnimationFrame(() => {
-      const rect   = glassRef.current.getBoundingClientRect();
-      const cx     = rect.left + rect.width  / 2;
-      const cy     = rect.top  + rect.height / 2;
-      const dx     = (e.clientX - cx) / (rect.width  / 2);
-      const dy     = (e.clientY - cy) / (rect.height / 2);
-      const rotX   = (-dy * 5).toFixed(2);
-      const rotY   = ( dx * 5).toFixed(2);
-      const shiftX = (dx * 6).toFixed(1);
-      const shiftY = (dy * 6).toFixed(1);
+      const rect = glassRef.current.getBoundingClientRect();
+      const cx   = rect.left + rect.width  / 2;
+      const cy   = rect.top  + rect.height / 2;
+      const dx   = (e.clientX - cx) / (rect.width  / 2);
+      const dy   = (e.clientY - cy) / (rect.height / 2);
+      const rotX = (-dy * 5).toFixed(2);
+      const rotY = ( dx * 5).toFixed(2);
       glassRef.current.style.transform =
         `perspective(900px) rotateX(${rotX}deg) rotateY(${rotY}deg)`;
-      glassRef.current.style.setProperty("--highlight-x", `${50 + dx * 20}%`);
-      glassRef.current.style.setProperty("--highlight-y", `${50 + dy * 20}%`);
     });
   }, []);
 
@@ -341,16 +337,9 @@ export default function Hero() {
     <section className="hero" id="hero">
       <ThemeSwitcher />
 
-      {/* #5 — Available badge */}
-      <div className={`hero__available${mounted ? " hero__available--in" : ""}`} aria-label="Available for work">
-        <span className="hero__available-dot" aria-hidden="true" />
-        Available for work
-      </div>
-
       <div className="hero__container">
         <Blob />
 
-        {/* #2 — Tiltable glass card */}
         <div
           className={`hero__glass${mounted ? " hero__glass--in" : ""}`}
           ref={glassRef}
@@ -377,10 +366,9 @@ export default function Hero() {
           </p>
 
           <div className="hero__actions hero__anim hero__anim--6">
-            {/* #3 — Magnetic primary button */}
-            <MagneticButton className="hero__btn hero__btn--primary" onClick={scrollToProjects}>
+            <button className="hero__btn hero__btn--primary" onClick={scrollToProjects}>
               View Projects
-            </MagneticButton>
+            </button>
             <button className="hero__btn hero__btn--secondary" onClick={scrollToContact}>
               Get in Touch
             </button>
@@ -390,45 +378,5 @@ export default function Hero() {
 
       <ScrollArrow />
     </section>
-  );
-}
-
-/* ─── Magnetic Button (#3) ─── */
-function MagneticButton({ className, onClick, children }) {
-  const btnRef = useRef(null);
-  const frameRef = useRef(null);
-  const reducedMotion = typeof window !== "undefined"
-    ? window.matchMedia("(prefers-reduced-motion: reduce)").matches
-    : false;
-
-  const handleMove = useCallback((e) => {
-    if (reducedMotion || !btnRef.current) return;
-    cancelAnimationFrame(frameRef.current);
-    frameRef.current = requestAnimationFrame(() => {
-      const rect = btnRef.current.getBoundingClientRect();
-      const cx   = rect.left + rect.width  / 2;
-      const cy   = rect.top  + rect.height / 2;
-      const dx   = ((e.clientX - cx) / (rect.width  / 2)) * 7;
-      const dy   = ((e.clientY - cy) / (rect.height / 2)) * 7;
-      btnRef.current.style.transform = `translate(${dx.toFixed(1)}px, ${dy.toFixed(1)}px)`;
-    });
-  }, [reducedMotion]);
-
-  const handleLeave = useCallback(() => {
-    cancelAnimationFrame(frameRef.current);
-    if (btnRef.current) btnRef.current.style.transform = "translate(0,0)";
-  }, []);
-
-  return (
-    <button
-      ref={btnRef}
-      className={className}
-      onClick={onClick}
-      onMouseMove={handleMove}
-      onMouseLeave={handleLeave}
-      style={{ transition: "transform 0.35s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.25s ease, background 0.25s ease" }}
-    >
-      {children}
-    </button>
   );
 }
