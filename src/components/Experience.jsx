@@ -66,18 +66,22 @@ export default function Experience() {
         <div className="experience__toolbox-container">
           <div className="toolbox__mindmap">
             
-            {/* Connecting SVG Lines mapped to the new expanded layout */}
-            <svg 
-              className="toolbox__connections" 
-              viewBox="0 0 100 100" 
+            {/* Connecting lines — dim track + flowing bright dash */}
+            <svg
+              className="toolbox__connections"
+              viewBox="0 0 100 100"
               preserveAspectRatio="none"
+              aria-hidden="true"
             >
-              {/* Center orb connects to Backend */}
-              <line x1="50" y1="50" x2="20" y2="20" />
-              {/* Center orb connects to Frontend */}
-              <line x1="50" y1="50" x2="80" y2="20" />
-              {/* Center orb connects to Tools */}
-              <line x1="50" y1="50" x2="50" y2="82" />
+              {/* Dim base tracks */}
+              <line className="toolbox__track" x1="43" y1="44" x2="34" y2="33" />
+              <line className="toolbox__track" x1="57" y1="44" x2="68" y2="30" />
+              <line className="toolbox__track" x1="50" y1="59" x2="50" y2="71" />
+
+              {/* Flowing dashes on top */}
+              <line className="toolbox__flow" x1="43" y1="44" x2="34" y2="33" />
+              <line className="toolbox__flow toolbox__flow--2" x1="57" y1="44" x2="68" y2="30" />
+              <line className="toolbox__flow toolbox__flow--3" x1="50" y1="59" x2="50" y2="71" />
             </svg>
 
             {/* Central Orb */}

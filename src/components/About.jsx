@@ -72,41 +72,36 @@ function LiveTicker() {
 }
 
 /* ─── Emoji reactions ─── */
-const REACTION_EMOJIS = ["👋", "❤️", "🔥", "🚀"];
+const REACTION_EMOJIS = ["😎", "❤️", "🔥", "🚀"];
 
 function EmojiReactions() {
   const reducedMotion = typeof window !== "undefined"
     ? window.matchMedia("(prefers-reduced-motion: reduce)").matches
     : false;
 
-  const burst = useCallback((e, emoji) => {
+  const burst = useCallback((emoji) => {
     if (reducedMotion) return;
-    const count = 12;
-    const rect = e.currentTarget.getBoundingClientRect();
-    const originX = rect.left + rect.width / 2;
-    const originY = rect.top + rect.height / 2;
+    const count = 8;
 
     for (let i = 0; i < count; i++) {
       const el = document.createElement("span");
       el.textContent = emoji;
       el.className = "about__burst-particle";
 
-      // Random trajectory
-      const angle = (Math.random() * 360) * (Math.PI / 180);
-      const distance = 80 + Math.random() * 160;
-      const tx = Math.cos(angle) * distance;
-      const ty = Math.sin(angle) * distance - 60; // bias upward
-      const scale = 0.8 + Math.random() * 0.8;
-      const duration = 600 + Math.random() * 400;
-      const delay = Math.random() * 80;
+      // Spread across full screen width, start from bottom
+      const startX = 8 + Math.random() * 84; // 8–92vw
+      const sway   = (Math.random() - 0.5) * 120; // gentle horizontal drift
+      const size   = 4 + Math.random() * 3;       // 4–7rem
+      const duration = 1800 + Math.random() * 800; // 1.8–2.6s
+      const delay    = Math.random() * 600;
+      const rotation = (Math.random() - 0.5) * 30; // slight tilt
 
       el.style.cssText = `
-        left: ${originX}px;
-        top: ${originY}px;
-        font-size: ${1 + Math.random() * 0.6}rem;
-        --tx: ${tx.toFixed(1)}px;
-        --ty: ${ty.toFixed(1)}px;
-        --scale: ${scale};
+        left: ${startX}vw;
+        top: 100vh;
+        font-size: ${size}rem;
+        --sway: ${sway.toFixed(1)}px;
+        --rot: ${rotation.toFixed(1)}deg;
         animation-duration: ${duration}ms;
         animation-delay: ${delay}ms;
       `;
@@ -122,7 +117,7 @@ function EmojiReactions() {
         <button
           key={emoji}
           className="about__reaction-btn"
-          onClick={(e) => burst(e, emoji)}
+          onClick={() => burst(emoji)}
           aria-label={`Send ${emoji}`}
         >
           {emoji}

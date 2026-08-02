@@ -1,3 +1,9 @@
+@property --gradient-angle {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+
 /* ============================================
    About Section — Apple-style Glassmorphism
    Features:
@@ -22,7 +28,7 @@
 
   position: relative;
   overflow-x: clip;
-  padding: clamp(4rem, 8vw, 8rem) clamp(1.25rem, 5vw, 4rem);
+  padding: clamp(2rem, 4vw, 4rem) clamp(1.25rem, 5vw, 4rem);
   background: transparent;
   color: var(--about-text);
   font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI",
@@ -105,6 +111,51 @@
   pointer-events: none;
 }
 
+/* Rotating gradient border — single glowing spot orbiting the card */
+.about__glass::after {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: conic-gradient(
+    from var(--gradient-angle),
+    transparent 0deg,
+    transparent 60deg,
+    rgba(138, 180, 255, 0.15) 90deg,
+    rgba(138, 180, 255, 0.7) 110deg,
+    rgba(200, 220, 255, 0.95) 120deg,
+    rgba(138, 180, 255, 0.7) 130deg,
+    rgba(138, 180, 255, 0.15) 150deg,
+    transparent 180deg,
+    transparent 360deg
+  );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  animation: about-border-spin 6s linear infinite;
+}
+
+[data-theme="light"] .about__glass::after {
+  background: conic-gradient(
+    from var(--gradient-angle),
+    transparent 0deg,
+    transparent 60deg,
+    rgba(47, 111, 237, 0.12) 90deg,
+    rgba(47, 111, 237, 0.55) 110deg,
+    rgba(47, 111, 237, 0.85) 120deg,
+    rgba(47, 111, 237, 0.55) 130deg,
+    rgba(47, 111, 237, 0.12) 150deg,
+    transparent 180deg,
+    transparent 360deg
+  );
+}
+
+@keyframes about-border-spin {
+  to { --gradient-angle: 360deg; }
+}
+
 .about__glass:hover {
   box-shadow:
     0 28px 70px var(--about-glass-shadow),
@@ -174,8 +225,8 @@
 
 @media (max-width: 600px) {
   .about__right-col {
-    flex-direction: row;
-    align-items: center;
+    flex-direction: column;
+    align-items: stretch;
   }
 }
 
@@ -197,8 +248,7 @@
 
 @media (max-width: 600px) {
   .about__ticker {
-    width: auto;
-    flex: 1;
+    width: 100%;
     border-radius: 999px;
   }
 }
@@ -219,7 +269,7 @@
 
 .about__ticker-content {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   gap: 0.4rem;
   font-size: 0.72rem;
   font-weight: 500;
@@ -242,6 +292,10 @@
 .about__ticker-icon {
   font-size: 0.85rem;
   line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
 }
 
 /* ── Emoji reactions ── */
@@ -255,7 +309,7 @@
 
 @media (max-width: 600px) {
   .about__reactions {
-    width: auto;
+    width: 100%;
     grid-template-columns: repeat(4, 1fr);
   }
 }
@@ -299,24 +353,30 @@
   outline-offset: 3px;
 }
 
-/* Burst particles — appended to body, positioned fixed */
+/* macOS-style full-screen floating reactions */
 .about__burst-particle {
   position: fixed;
   pointer-events: none;
   z-index: 9999;
-  transform: translate(-50%, -50%);
-  animation: about-burst 800ms ease-out forwards;
+  transform: translateX(-50%);
+  animation: about-float-up linear forwards;
   will-change: transform, opacity;
+  user-select: none;
 }
 
-@keyframes about-burst {
-  0%   { transform: translate(-50%, -50%) scale(0.4); opacity: 1; }
-  60%  { opacity: 1; }
+@keyframes about-float-up {
+  0% {
+    transform: translateX(calc(-50% + 0px)) translateY(0) rotate(0deg);
+    opacity: 0;
+  }
+  8% {
+    opacity: 1;
+  }
+  85% {
+    opacity: 1;
+  }
   100% {
-    transform: translate(
-      calc(-50% + var(--tx)),
-      calc(-50% + var(--ty))
-    ) scale(var(--scale));
+    transform: translateX(calc(-50% + var(--sway))) translateY(-105vh) rotate(var(--rot));
     opacity: 0;
   }
 }
@@ -398,6 +458,7 @@
 
 /* ── Reduced motion ── */
 @media (prefers-reduced-motion: reduce) {
+  .about__glass::after   { animation: none; }
   .about__glass          { transition: none; animation: none; opacity: 1; transform: none; }
   .about__glass:hover    { transform: none; }
   .about__ticker-dot     { animation: none; }

@@ -6,6 +6,10 @@ import Projects from "./components/Projects";
 import Contact from "./components/Contact";
 import { useEffect } from "react";
 
+if (typeof window !== "undefined") {
+  window.history.scrollRestoration = "manual";
+}
+
 function App() {
   console.log(
     "%cGreetings!",

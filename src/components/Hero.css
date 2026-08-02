@@ -1,3 +1,9 @@
+@property --hero-gradient-angle {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+
 /* ============================================
    Hero Section — Glassmorphism Style
    ============================================ */
@@ -32,7 +38,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: clamp(2rem, 6vw, 4rem);
+  padding: clamp(2rem, 6vw, 4rem) clamp(2rem, 6vw, 4rem) clamp(1rem, 3vw, 2rem);
   background: transparent;
   color: var(--hero-text);
   font-family:
@@ -202,6 +208,51 @@
   mask-composite: exclude;
   opacity: 0.6;
   pointer-events: none;
+}
+
+/* Comet border — single glowing spot orbiting the card */
+.hero__glass::after {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: conic-gradient(
+    from var(--hero-gradient-angle),
+    transparent 0deg,
+    transparent 60deg,
+    rgba(138, 180, 255, 0.15) 90deg,
+    rgba(138, 180, 255, 0.7) 110deg,
+    rgba(200, 220, 255, 0.95) 120deg,
+    rgba(138, 180, 255, 0.7) 130deg,
+    rgba(138, 180, 255, 0.15) 150deg,
+    transparent 180deg,
+    transparent 360deg
+  );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  animation: hero-border-spin 6s linear infinite;
+}
+
+[data-theme="light"] .hero__glass::after {
+  background: conic-gradient(
+    from var(--hero-gradient-angle),
+    transparent 0deg,
+    transparent 60deg,
+    rgba(47, 111, 237, 0.12) 90deg,
+    rgba(47, 111, 237, 0.55) 110deg,
+    rgba(47, 111, 237, 0.85) 120deg,
+    rgba(47, 111, 237, 0.55) 130deg,
+    rgba(47, 111, 237, 0.12) 150deg,
+    transparent 180deg,
+    transparent 360deg
+  );
+}
+
+@keyframes hero-border-spin {
+  to { --hero-gradient-angle: 360deg; }
 }
 
 /* ── #1 — Staggered entrance animations ── */
@@ -440,4 +491,5 @@
   .hero__scroll-arrow-icon     { animation: none; }
   .hero__glass--in .hero__anim { animation: none; opacity: 1; transform: none; }
   .hero__glass                 { transition: none !important; transform: none !important; }
+  .hero__glass::after          { animation: none; }
 }

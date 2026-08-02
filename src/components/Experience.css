@@ -1,3 +1,9 @@
+@property --gradient-angle {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+
 /* ============================================
    Experience Section — Apple-style Glassmorphism
    ============================================ */
@@ -79,6 +85,55 @@
   pointer-events: none;
 }
 
+/* Comet border — single glowing spot orbiting the card */
+.experience__glass::after {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: conic-gradient(
+    from var(--gradient-angle),
+    transparent 0deg,
+    transparent 60deg,
+    rgba(138, 180, 255, 0.15) 90deg,
+    rgba(138, 180, 255, 0.7) 110deg,
+    rgba(200, 220, 255, 0.95) 120deg,
+    rgba(138, 180, 255, 0.7) 130deg,
+    rgba(138, 180, 255, 0.15) 150deg,
+    transparent 180deg,
+    transparent 360deg
+  );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  animation: exp-border-spin 6s linear infinite;
+}
+
+[data-theme="light"] .experience__glass::after {
+  background: conic-gradient(
+    from var(--gradient-angle),
+    transparent 0deg,
+    transparent 60deg,
+    rgba(47, 111, 237, 0.12) 90deg,
+    rgba(47, 111, 237, 0.55) 110deg,
+    rgba(47, 111, 237, 0.85) 120deg,
+    rgba(47, 111, 237, 0.55) 130deg,
+    rgba(47, 111, 237, 0.12) 150deg,
+    transparent 180deg,
+    transparent 360deg
+  );
+}
+
+@keyframes exp-border-spin {
+  to { --gradient-angle: 360deg; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .experience__glass::after { animation: none; }
+}
+
 /* Layout Assignments */
 .experience__timeline-container { order: 1; }
 .experience__toolbox-container {
@@ -135,7 +190,7 @@
 @media (max-width: 650px)  { .toolbox__mindmap { transform: scale(0.9); } }
 @media (max-width: 480px)  { .toolbox__mindmap { transform: scale(0.8); } }
 
-/* SVG Background Lines */
+/* SVG connections */
 .toolbox__connections {
   position: absolute;
   inset: 0;
@@ -145,10 +200,32 @@
   pointer-events: none;
 }
 
-.toolbox__connections line {
+/* Dim solid base track */
+.toolbox__track {
   stroke: var(--exp-glass-border);
-  stroke-width: 0.4;
-  stroke-dasharray: 4 4;
+  stroke-width: 0.6;
+  stroke-linecap: round;
+  opacity: 0.5;
+}
+
+/* Bright flowing dash on top */
+.toolbox__flow {
+  stroke: var(--exp-eyebrow);
+  stroke-width: 0.8;
+  stroke-linecap: round;
+  stroke-dasharray: 3 6;
+  opacity: 0.9;
+  animation: toolbox-flow 1.4s linear infinite;
+}
+.toolbox__flow--2 { animation-delay: -0.5s; }
+.toolbox__flow--3 { animation-delay: -1s; }
+
+@keyframes toolbox-flow {
+  to { stroke-dashoffset: -9; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .toolbox__flow { animation: none; }
 }
 
 /* Central "Toolbox" Orb - Dead Center */
