@@ -2,6 +2,12 @@
    Contact Section — Apple-style Glassmorphism
    ============================================ */
 
+@property --contact-gradient-angle {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+
 .contact {
   --contact-bg: #0b0b0f;
   --contact-bg-alt: #121218;
@@ -92,6 +98,60 @@
   mask-composite: exclude;
   opacity: 0.6;
   pointer-events: none;
+}
+
+.contact__glass::after {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: conic-gradient(
+    from var(--contact-gradient-angle),
+    transparent 0deg,
+    transparent 60deg,
+    rgba(138, 180, 255, 0.15) 90deg,
+    rgba(138, 180, 255, 0.7) 110deg,
+    rgba(200, 220, 255, 0.95) 120deg,
+    rgba(138, 180, 255, 0.7) 130deg,
+    rgba(138, 180, 255, 0.15) 150deg,
+    transparent 180deg,
+    transparent 360deg
+  );
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  animation: contact-border-spin 6s linear infinite;
+}
+
+[data-theme="light"] .contact__glass::after {
+  background: conic-gradient(
+    from var(--contact-gradient-angle),
+    transparent 0deg,
+    transparent 60deg,
+    rgba(47, 111, 237, 0.12) 90deg,
+    rgba(47, 111, 237, 0.55) 110deg,
+    rgba(47, 111, 237, 0.85) 120deg,
+    rgba(47, 111, 237, 0.55) 130deg,
+    rgba(47, 111, 237, 0.12) 150deg,
+    transparent 180deg,
+    transparent 360deg
+  );
+}
+
+@keyframes contact-border-spin {
+  to {
+    --contact-gradient-angle: 360deg;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .contact__glass::after {
+    animation: none;
+  }
 }
 
 .contact__eyebrow {
