@@ -9,53 +9,155 @@
    ============================================ */
 
 .experience {
-  --exp-text: #f5f5f7;
-  --exp-text-muted: rgba(245, 245, 247, 0.68);
-  --exp-eyebrow: #8ab4ff;
-  --exp-glass-bg: rgba(255, 255, 255, 0.06);
-  --exp-glass-border: rgba(255, 255, 255, 0.14);
-  --exp-glass-shadow: rgba(0, 0, 0, 0.45);
+  --exp-text:            #f5f5f7;
+  --exp-text-muted:      rgba(245, 245, 247, 0.68);
+  --exp-eyebrow:         #8ab4ff;
+  --exp-glass-bg:        rgba(255, 255, 255, 0.06);
+  --exp-glass-border:    rgba(255, 255, 255, 0.14);
+  --exp-glass-shadow:    rgba(0, 0, 0, 0.45);
   --exp-glass-highlight: rgba(255, 255, 255, 0.35);
-  --exp-pill-bg: rgba(255, 255, 255, 0.08);
-  --exp-pill-border: rgba(255, 255, 255, 0.16);
-  --exp-pill-text: #f5f5f7;
-  --exp-divider: rgba(255, 255, 255, 0.1);
+  --exp-pill-bg:         rgba(255, 255, 255, 0.08);
+  --exp-pill-border:     rgba(255, 255, 255, 0.16);
+  --exp-divider:         rgba(255, 255, 255, 0.1);
+  --exp-node-glow:       rgba(138, 180, 255, 0.55);
+  --exp-line-color:      #8ab4ff;
 
   position: relative;
   overflow-x: clip;
   padding: clamp(4rem, 8vw, 8rem) clamp(1.25rem, 5vw, 4rem);
   background: transparent;
   color: var(--exp-text);
-  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI",
-    Roboto, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, sans-serif;
 }
 
 [data-theme="light"] .experience {
-  --exp-text: #1d1d1f;
-  --exp-text-muted: rgba(29, 29, 31, 0.62);
-  --exp-eyebrow: #2f6fed;
-  --exp-glass-bg: rgba(255, 255, 255, 0.5);
-  --exp-glass-border: rgba(255, 255, 255, 0.7);
-  --exp-glass-shadow: rgba(31, 38, 61, 0.14);
+  --exp-text:            #1d1d1f;
+  --exp-text-muted:      rgba(29, 29, 31, 0.62);
+  --exp-eyebrow:         #2f6fed;
+  --exp-glass-bg:        rgba(255, 255, 255, 0.5);
+  --exp-glass-border:    rgba(255, 255, 255, 0.7);
+  --exp-glass-shadow:    rgba(31, 38, 61, 0.14);
   --exp-glass-highlight: rgba(255, 255, 255, 0.85);
-  --exp-pill-bg: rgba(255, 255, 255, 0.55);
-  --exp-pill-border: rgba(255, 255, 255, 0.8);
-  --exp-pill-text: #1d1d1f;
-  --exp-divider: rgba(0, 0, 0, 0.08);
+  --exp-pill-bg:         rgba(255, 255, 255, 0.55);
+  --exp-pill-border:     rgba(255, 255, 255, 0.8);
+  --exp-divider:         rgba(0, 0, 0, 0.08);
+  --exp-node-glow:       rgba(47, 111, 237, 0.4);
+  --exp-line-color:      #2f6fed;
 }
 
-/* Base layout — centered */
+/* ============================================
+   Page Layout
+   ============================================ */
+
 .experience__container {
   position: relative;
   z-index: 1;
-  max-width: 1200px;
+  max-width: 1000px;
   margin: 0 auto;
   display: grid;
-  grid-template-columns: 1fr;
-  gap: clamp(1.25rem, 3vw, 2rem);
+  grid-template-columns: 150px 1fr;
+  gap: clamp(2rem, 5vw, 3.5rem);
+  align-items: start;
 }
 
+@media (max-width: 768px) {
+  .experience__container {
+    grid-template-columns: 1fr;
+    gap: clamp(1.25rem, 3vw, 2rem);
+  }
+}
 
+/* ============================================
+   Left — Stats Sidebar
+   ============================================ */
+
+.experience__stats {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.experience__stats-eyebrow {
+  display: block;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--exp-eyebrow);
+  margin-bottom: 0.25rem;
+}
+
+.experience__stat-card {
+  position: relative;
+  background: var(--exp-glass-bg);
+  border: 1px solid var(--exp-glass-border);
+  border-radius: 16px;
+  padding: 1rem;
+  backdrop-filter: blur(16px) saturate(150%);
+  -webkit-backdrop-filter: blur(16px) saturate(150%);
+  box-shadow: 0 8px 24px var(--exp-glass-shadow), inset 0 1px 0 var(--exp-glass-highlight);
+  text-align: center;
+  opacity: 0;
+  animation: stat-in 0.5s ease forwards;
+}
+
+.experience__stat-card:nth-child(2) { animation-delay: 0.05s; }
+.experience__stat-card:nth-child(3) { animation-delay: 0.15s; }
+.experience__stat-card:nth-child(4) { animation-delay: 0.25s; }
+
+@keyframes stat-in {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.experience__stat-value {
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-bottom: 0.3rem;
+  background: linear-gradient(135deg, var(--exp-eyebrow), var(--exp-text));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.experience__stat-label {
+  font-size: 0.62rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--exp-text-muted);
+}
+
+@media (max-width: 768px) {
+  .experience__stats       { flex-direction: row; gap: 0.75rem; }
+  .experience__stat-card   { flex: 1; padding: 0.75rem; }
+  .experience__stat-value  { font-size: 1.4rem; }
+  .experience__stats-eyebrow { display: none; }
+}
+
+/* ============================================
+   Right — Eyebrow + Glass Card
+   ============================================ */
+
+.experience__timeline-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+/* Shared eyebrow style */
+.experience__eyebrow,
+.experience__stats-eyebrow {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--exp-eyebrow);
+}
+
+.experience__eyebrow {
+  display: inline-block;
+}
 
 /* Glass panel */
 .experience__glass {
@@ -69,9 +171,9 @@
   box-shadow:
     0 20px 60px var(--exp-glass-shadow),
     inset 0 1px 0 var(--exp-glass-highlight);
-  transition: transform 0.4s ease, box-shadow 0.4s ease;
 }
 
+/* Highlight sheen */
 .experience__glass::before {
   content: "";
   position: absolute;
@@ -131,185 +233,210 @@
   to { --gradient-angle: 360deg; }
 }
 
-.experience__timeline-container { 
-  order: 1; 
-  max-width: 600px;
-  margin: 0 auto;
-  width: 100%;
-}
-
-.experience__bento-container { 
-  order: 2;
-  width: 100%;
-}
-
-/* Eyebrow */
-.experience__eyebrow {
-  display: inline-block;
-  font-size: 0.8rem;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--exp-eyebrow);
-  margin-bottom: 1.25rem;
-}
-
-/* Timeline */
-.experience__timeline { display: flex; flex-direction: column; gap: 0; }
-.experience__entry { padding-bottom: 1.75rem; margin-bottom: 1.75rem; border-bottom: 1px solid var(--exp-divider); }
-.experience__entry:last-child { padding-bottom: 0; margin-bottom: 0; border-bottom: none; }
-.experience__entry-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; margin-bottom: 0.3rem; }
-.experience__role { font-size: 1.05rem; font-weight: 650; color: var(--exp-text); margin: 0; }
-.experience__period { font-size: 0.8rem; font-weight: 500; color: var(--exp-eyebrow); white-space: nowrap; margin-top: 0.15rem; }
-.experience__company { font-size: 0.88rem; font-weight: 500; color: var(--exp-text-muted); margin: 0 0 0.65rem; }
-.experience__desc { font-size: 0.95rem; line-height: 1.6; color: var(--exp-text-muted); margin: 0; }
-
 /* ============================================
-   Bento Toolbox
+   Timeline — line + nodes + entries
    ============================================ */
 
-.experience__bento-eyebrow {
-  display: block;
-  margin-bottom: 1rem;
-}
-
-.experience__bento-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: clamp(0.75rem, 2vw, 1.25rem);
-}
-
-@media (max-width: 780px) {
-  .experience__bento-grid { grid-template-columns: 1fr; }
-}
-
-/* Individual bento card */
-.experience__bento-card {
+.experience__timeline {
   position: relative;
-  background: var(--exp-glass-bg);
-  border: 1px solid var(--exp-glass-border);
-  border-radius: 22px;
-  padding: clamp(1.25rem, 3vw, 1.75rem);
-  backdrop-filter: blur(20px) saturate(160%);
-  -webkit-backdrop-filter: blur(20px) saturate(160%);
-  box-shadow: 0 12px 36px var(--exp-glass-shadow), inset 0 1px 0 var(--exp-glass-highlight);
-  transition: transform 0.35s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.35s ease, border-color 0.35s ease;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  /* left gutter = node diameter (14px) + gap to content (16px) */
+  padding-left: 30px;
 }
 
+/* ── Vertical line ─────────────────────────── */
+.experience__vline {
+  position: absolute;
+  left: 6px;           /* centre of 14 px node: 6 + 1 (half border) ≈ centre */
+  top: 8px;            /* start at first node centre */
+  bottom: 8px;         /* end at last node centre */
+  width: 2px;
+  border-radius: 2px;
+  background: linear-gradient(
+    180deg,
+    var(--exp-line-color) 0%,
+    rgba(138, 180, 255, 0.3) 70%,
+    transparent 100%
+  );
+  /* travelling glow bead */
+  overflow: hidden;
+}
 
-
-
-
-/* Static highlight border */
-.experience__bento-card::before {
+.experience__vline::after {
   content: "";
   position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  padding: 1px;
-  background: linear-gradient(135deg, var(--exp-glass-highlight), transparent 40%);
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  opacity: 0.5;
-  pointer-events: none;
+  left: 0;
+  width: 100%;
+  height: 40%;
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    var(--exp-node-glow) 50%,
+    transparent 100%
+  );
+  animation: line-bead 3s ease-in-out infinite;
+  border-radius: 2px;
 }
 
-/* Comet border for bento cards */
-.experience__bento-card::after {
+@keyframes line-bead {
+  0%   { top: -40%; }
+  100% { top: 140%; }
+}
+
+/* ── Nodes ─────────────────────────────────── */
+.experience__entry {
+  position: relative;
+  padding-bottom: 1.75rem;
+  margin-bottom: 1.75rem;
+  border-bottom: 1px solid var(--exp-divider);
+}
+
+.experience__entry:last-child {
+  padding-bottom: 0;
+  margin-bottom: 0;
+  border-bottom: none;
+}
+
+/* Node sits at left: 0 relative to .experience__timeline */
+.experience__node {
+  position: absolute;
+  left: -30px;
+  top: 4px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  /* solid opaque background so the vertical line is fully hidden behind the node */
+  background: #0f1117;
+  border: 2px solid var(--exp-line-color);
+  box-shadow: 0 0 8px var(--exp-node-glow);
+  opacity: 0;
+  animation: node-pop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  z-index: 2;
+}
+
+[data-theme="light"] .experience__node {
+  background: #f0f4ff;
+}
+
+/* inner filled dot */
+.experience__node::before {
   content: "";
   position: absolute;
-  inset: -1px;
-  border-radius: inherit;
-  padding: 1px;
-  background: conic-gradient(
-    from var(--gradient-angle),
-    transparent 0deg,
-    transparent 60deg,
-    rgba(138, 180, 255, 0.15) 90deg,
-    rgba(138, 180, 255, 0.7) 110deg,
-    rgba(200, 220, 255, 0.95) 120deg,
-    rgba(138, 180, 255, 0.7) 130deg,
-    rgba(138, 180, 255, 0.15) 150deg,
-    transparent 180deg,
-    transparent 360deg
-  );
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  pointer-events: none;
-  animation: exp-border-spin 6s linear infinite;
+  inset: 2px;
+  border-radius: 50%;
+  background: var(--exp-line-color);
+  opacity: 0.85;
 }
 
-[data-theme="light"] .experience__bento-card::after {
-  background: conic-gradient(
-    from var(--gradient-angle),
-    transparent 0deg,
-    transparent 60deg,
-    rgba(47, 111, 237, 0.12) 90deg,
-    rgba(47, 111, 237, 0.55) 110deg,
-    rgba(47, 111, 237, 0.85) 120deg,
-    rgba(47, 111, 237, 0.55) 130deg,
-    rgba(47, 111, 237, 0.12) 150deg,
-    transparent 180deg,
-    transparent 360deg
-  );
+/* outer pulse ring — tighter and subtler */
+.experience__node::after {
+  content: "";
+  position: absolute;
+  inset: -3px;
+  border-radius: 50%;
+  border: 1px solid var(--exp-line-color);
+  opacity: 0;
+  animation: node-pulse 2.4s ease-in-out infinite;
 }
 
-
-
-/* Icon */
-.experience__bento-icon {
-  font-size: 1.4rem;
-  margin-bottom: 0.6rem;
-  line-height: 1;
-  opacity: 0.75;
+@keyframes node-pop {
+  0%   { opacity: 0; transform: scale(0.3); }
+  60%  { transform: scale(1.2); }
+  100% { opacity: 1; transform: scale(1); }
 }
 
-/* Category label */
-.experience__bento-cat {
-  font-size: 0.72rem;
-  font-weight: 600;
-  letter-spacing: 0.09em;
-  text-transform: uppercase;
-  color: var(--exp-eyebrow);
-  margin-bottom: 0.85rem;
+@keyframes node-pulse {
+  0%, 100% { opacity: 0;    transform: scale(1);   }
+  50%       { opacity: 0.35; transform: scale(1.4); }
 }
 
-/* Pills */
-.experience__bento-pills {
+/* ── Entry content ─────────────────────────── */
+.experience__entry-body {
   display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
+  flex-direction: column;
 }
 
-.experience__bento-pill {
+.experience__entry-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-bottom: 0.45rem;
+}
+
+.experience__title-row {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  flex: 1;
+  min-width: 0;
+}
+
+/* Company icon badge */
+.experience__icon-wrap {
+  width: 26px;
+  height: 26px;
+  border-radius: 7px;
+  overflow: hidden;
+  flex-shrink: 0;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.35);
+  opacity: 0;
+  animation: icon-in 0.45s ease forwards;
+}
+
+@keyframes icon-in {
+  from { opacity: 0; transform: scale(0.75); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+.experience__company-icon {
+  width: 26px;
+  height: 26px;
+  display: block;
+}
+
+.experience__role {
+  font-size: 1rem;
+  font-weight: 650;
+  color: var(--exp-text);
+  margin: 0;
+  line-height: 1.3;
+  min-width: 0;
+}
+
+.experience__period {
   font-size: 0.78rem;
   font-weight: 500;
-  padding: 0.3rem 0.75rem;
-  border-radius: 999px;
-  background: var(--exp-pill-bg);
-  border: 1px solid var(--exp-pill-border);
-  color: var(--exp-pill-text);
-  cursor: default;
-  opacity: 0;
-  animation: bento-pill-in 0.4s ease forwards;
-  transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+  color: var(--exp-eyebrow);
+  white-space: nowrap;
+  margin-top: 0.1rem;
+  flex-shrink: 0;
 }
 
-
-
-@keyframes bento-pill-in {
-  from { opacity: 0; transform: translateY(5px); }
-  to   { opacity: 1; transform: translateY(0); }
+.experience__company {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--exp-text-muted);
+  margin: 0 0 0.55rem;
 }
 
-/* Reduced motion */
+.experience__desc {
+  font-size: 0.92rem;
+  line-height: 1.65;
+  color: var(--exp-text-muted);
+  margin: 0;
+}
+
+/* ============================================
+   Reduced motion
+   ============================================ */
+
 @media (prefers-reduced-motion: reduce) {
-  .experience__glass::after  { animation: none; }
-  .experience__bento-card    { animation: none !important; transition: none; }
-  .experience__bento-pill    { animation: none; opacity: 1; }
+  .experience__glass::after,
+  .experience__vline::after,
+  .experience__node::after   { animation: none; }
+  .experience__node          { animation: none; opacity: 1; }
+  .experience__stat-card     { animation: none; opacity: 1; }
+  .experience__icon-wrap     { animation: none; opacity: 1; }
 }

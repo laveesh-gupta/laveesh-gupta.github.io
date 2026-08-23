@@ -1,0 +1,220 @@
+@property --gradient-angle {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+
+/* ============================================
+   Toolbox Section — Apple-style Glassmorphism
+   ============================================ */
+
+.toolbox {
+  --toolbox-text: #f5f5f7;
+  --toolbox-text-muted: rgba(245, 245, 247, 0.68);
+  --toolbox-eyebrow: #8ab4ff;
+  --toolbox-glass-bg: rgba(255, 255, 255, 0.06);
+  --toolbox-glass-border: rgba(255, 255, 255, 0.14);
+  --toolbox-glass-shadow: rgba(0, 0, 0, 0.45);
+  --toolbox-glass-highlight: rgba(255, 255, 255, 0.35);
+  --toolbox-pill-bg: rgba(255, 255, 255, 0.08);
+  --toolbox-pill-border: rgba(255, 255, 255, 0.16);
+  --toolbox-pill-text: #f5f5f7;
+
+  position: relative;
+  overflow-x: clip;
+  padding: clamp(4rem, 8vw, 8rem) clamp(1.25rem, 5vw, 4rem);
+  background: transparent;
+  color: var(--toolbox-text);
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI",
+    Roboto, sans-serif;
+}
+
+[data-theme="light"] .toolbox {
+  --toolbox-text: #1d1d1f;
+  --toolbox-text-muted: rgba(29, 29, 31, 0.62);
+  --toolbox-eyebrow: #2f6fed;
+  --toolbox-glass-bg: rgba(255, 255, 255, 0.5);
+  --toolbox-glass-border: rgba(255, 255, 255, 0.7);
+  --toolbox-glass-shadow: rgba(31, 38, 61, 0.14);
+  --toolbox-glass-highlight: rgba(255, 255, 255, 0.85);
+  --toolbox-pill-bg: rgba(255, 255, 255, 0.55);
+  --toolbox-pill-border: rgba(255, 255, 255, 0.8);
+  --toolbox-pill-text: #1d1d1f;
+}
+
+/* Base layout — centered */
+.toolbox__container {
+  position: relative;
+  z-index: 1;
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(1.25rem, 3vw, 2rem);
+}
+
+/* Eyebrow */
+.toolbox__eyebrow {
+  display: block;
+  text-align: center;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--toolbox-eyebrow);
+  margin-bottom: 1.25rem;
+}
+
+/* Bento grid */
+.toolbox__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(0.75rem, 2vw, 1.25rem);
+}
+
+@media (max-width: 780px) {
+  .toolbox__grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Individual bento card */
+.toolbox__card {
+  position: relative;
+  background: var(--toolbox-glass-bg);
+  border: 1px solid var(--toolbox-glass-border);
+  border-radius: 22px;
+  padding: clamp(1.25rem, 3vw, 1.75rem);
+  backdrop-filter: blur(20px) saturate(160%);
+  -webkit-backdrop-filter: blur(20px) saturate(160%);
+  box-shadow: 0 12px 36px var(--toolbox-glass-shadow), inset 0 1px 0 var(--toolbox-glass-highlight);
+  transition: transform 0.35s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.35s ease, border-color 0.35s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+/* Static highlight border */
+.toolbox__card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(135deg, var(--toolbox-glass-highlight), transparent 40%);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+/* Comet border for cards */
+.toolbox__card::after {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: conic-gradient(
+    from var(--gradient-angle),
+    transparent 0deg,
+    transparent 60deg,
+    rgba(138, 180, 255, 0.15) 90deg,
+    rgba(138, 180, 255, 0.7) 110deg,
+    rgba(200, 220, 255, 0.95) 120deg,
+    rgba(138, 180, 255, 0.7) 130deg,
+    rgba(138, 180, 255, 0.15) 150deg,
+    transparent 180deg,
+    transparent 360deg
+  );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  animation: toolbox-border-spin 6s linear infinite;
+}
+
+[data-theme="light"] .toolbox__card::after {
+  background: conic-gradient(
+    from var(--gradient-angle),
+    transparent 0deg,
+    transparent 60deg,
+    rgba(47, 111, 237, 0.12) 90deg,
+    rgba(47, 111, 237, 0.55) 110deg,
+    rgba(47, 111, 237, 0.85) 120deg,
+    rgba(47, 111, 237, 0.55) 130deg,
+    rgba(47, 111, 237, 0.12) 150deg,
+    transparent 180deg,
+    transparent 360deg
+  );
+}
+
+@keyframes toolbox-border-spin {
+  to { --gradient-angle: 360deg; }
+}
+
+/* Icon */
+.toolbox__icon {
+  font-size: 1.4rem;
+  margin-bottom: 0.6rem;
+  line-height: 1;
+  opacity: 0.75;
+}
+
+/* Category label */
+.toolbox__category {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--toolbox-eyebrow);
+  margin-bottom: 0.85rem;
+}
+
+/* Pills */
+.toolbox__pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.toolbox__pill {
+  font-size: 0.78rem;
+  font-weight: 500;
+  padding: 0.3rem 0.75rem;
+  border-radius: 999px;
+  background: var(--toolbox-pill-bg);
+  border: 1px solid var(--toolbox-pill-border);
+  color: var(--toolbox-pill-text);
+  cursor: default;
+  opacity: 0;
+  animation: toolbox-pill-in 0.4s ease forwards;
+  transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes toolbox-pill-in {
+  from { 
+    opacity: 0; 
+    transform: translateY(5px); 
+  }
+  to { 
+    opacity: 1; 
+    transform: translateY(0); 
+  }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .toolbox__card::after { 
+    animation: none; 
+  }
+  .toolbox__card { 
+    animation: none !important; 
+    transition: none; 
+  }
+  .toolbox__pill { 
+    animation: none; 
+    opacity: 1; 
+  }
+}
