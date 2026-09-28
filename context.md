@@ -30,7 +30,7 @@ The landing section. Full viewport height.
 - Typewriter role cycling: `Frontend Developer`, `React Developer`, `UI Engineer`, `Creative Coder`
 - Glass card with 3D tilt on mouse move and comet border
 - Staggered entrance animations on child elements
-- Dark/light theme toggle (top-right)
+- Dark/light theme toggle (top-right) — inline component via ThemeSwitcher()
 - Scroll-down arrow that hides on scroll
 - CTA buttons: **View Projects** → `#projects`, **Get in Touch** → `#contact`
 
@@ -50,27 +50,44 @@ Personal introduction section.
 
 ---
 
-### 3. Experience (`#experience`)
+### 3. Toolbox (`#toolbox`)
 
-**Files:** `Experience.jsx`, `Experience.css`
+**Files:** `Toolbox.jsx`, `Toolbox.css`
 
-Work history and skills, two-column layout.
+Skills showcase — **separate section** (not part of Experience). Three-column layout.
 
-- Left column: glass card with comet border — timeline of 3 roles (IDFC FIRST Bank, Unisys, Samsung SRIB)
-- Right column: interactive mind map — central "Toolbox" orb connected to 3 skill clusters (Backend & Dev, Frontend, Tools & Core) via animated flowing SVG lines
-- Skill clusters float with a gentle Y-axis animation, paused on hover
-- Responsive: stacks to single column below 980px, mind map moves above timeline on mobile
-- `@property --gradient-angle` shared with About (both use same CSS custom property name — watch for conflicts if ever in the same stylesheet)
+- Icon-based category cards with pill-shaped skill tags
+- Categories: Backend & Dev, Frontend, Tools & Core
+- Each category card has its own staggered entrance animation
 
-**Skill clusters:**
+**Skill categories:**
 
-- Backend & Dev: Node.js, Docker, MongoDB, REST APIs, Microservices, GoCD
-- Frontend: React, Next.js, Tailwind CSS, JavaScript, CSS3, HTML
-- Tools & Core: Git, Figma, Web Security, Accessibility, Vite, Redux
+- **Backend & Dev:** Node.js, Docker, MongoDB, REST APIs, Microservices, GoCD
+- **Frontend:** React, Next.js, Tailwind CSS, JavaScript, CSS3, HTML
+- **Tools & Core:** Git, Figma, Web Security, Accessibility, Vite, Redux
 
 ---
 
-### 4. Projects (`#projects`)
+### 4. Experience (`#experience`)
+
+**Files:** `Experience.jsx`, `Experience.css`
+
+Work history and overview stats, two-column layout.
+
+- **Left column:** Stat cards showing `4+ Years Active`, `3 Roles Held`, `3 Companies`
+- **Right column:** Vertical timeline with 3 roles (IDFC FIRST Bank, Unisys, Samsung SRIB)
+- Each entry shows role, company, period, and description
+- Simple animated dots along the vertical timeline line
+
+**Timeline entries:**
+
+1. **Developer @ IDFC FIRST Bank** (2022 – Present) - React SPA development
+2. **Tech Intern @ Unisys** (2021) - Legacy system modernization
+3. **ML Research Intern @ Samsung SRIB** (2020) - Recommendation models
+
+---
+
+### 5. Projects (`#projects`)
 
 **Files:** `Projects.jsx`, `Projects.css`
 
@@ -89,7 +106,7 @@ Showcase of shipped work. Linked from Hero CTA: **View Projects**
 
 ---
 
-### 5. Contact (`#contact`)
+### 6. Contact (`#contact`)
 
 **Files:** `Contact.jsx`, `Contact.css`
 
@@ -110,13 +127,40 @@ Get in touch section. Linked from Hero CTA: **Get in Touch**
 
 ## Shared Patterns
 
-| Pattern                      | Details                                                                                                                  |
-| ---------------------------- | ------------------------------------------------------------------------------------------------------------------------ |
-| Glass card                   | `backdrop-filter: blur(24px) saturate(160%)`, border, inset highlight shadow                                             |
-| Comet border                 | `::after` with `conic-gradient` + `@property` angle — Hero, About, Experience. **Not on** Projects cards or Contact card |
-| Static border                | `::before` linear-gradient highlight on all glass cards                                                                  |
-| Entrance animation           | `IntersectionObserver` → adds `--in` class → CSS transition (Hero, About)                                                |
-| Theme switching              | `data-theme="light"` on `<html>`, CSS vars swap per section                                                              |
-| Scroll restoration           | `window.history.scrollRestoration = "manual"` in App                                                                     |
-| Reduced motion               | `@media (prefers-reduced-motion: reduce)` disables all animations across all files                                       |
-| `@property --gradient-angle` | Declared in About.css and Experience.css separately — same name, works because they're scoped but worth noting           |
+| Pattern            | Details                                                                                                                  |
+| ------------------ | ------------------------------------------------------------------------------------------------------------------------ |
+| Glass card         | `backdrop-filter: blur(24px) saturate(160%)`, border, inset highlight shadow                                             |
+| Comet border       | `::after` with `conic-gradient` + `@property` angle — Hero, About, Experience. **Not on** Projects cards or Contact card |
+| Static border      | `::before` linear-gradient highlight on all glass cards                                                                  |
+| Entrance animation | `IntersectionObserver` → adds `--in` class → CSS transition (Hero, About)                                                |
+| Theme switching    | `data-theme="light"` on `<html>`, CSS vars swap per section                                                              |
+| Scroll restoration | `window.history.scrollRestoration = "manual"` in App                                                                     |
+| Reduced motion     | `@media (prefers-reduced-motion: reduce)` disables all animations across all files                                       |
+| Background blobs   | Fixed-position animated gradient orbs (`.blob-container`) — decorative, no interaction                                   |
+
+---
+
+## Additional Notes
+
+- **App.jsx:** Contains global styles and splash screen animation that fades out on load
+- **ThemeToggle.jsx:** Exists but not currently used (theme switching is handled inline in Hero.jsx via ThemeSwitcher)
+- **@property --gradient-angle:** Used for comet border animations — declared separately in About.css and Experience.css
+- **Toolbox** was previously described as part of Experience's mind map, but it's actually a separate section with its own layout
+
+---
+
+## File Structure Summary
+
+```
+src/
+├── components/
+│   ├── Hero.jsx/css      # Landing section with animated mascot
+│   ├── About.jsx/css     # Personal intro + stats + reactions
+│   ├── Toolbox.jsx/css   # Skills showcase (separate from Experience)
+│   ├── Experience.jsx/css# Work timeline + overview stats
+│   ├── Projects.jsx/css  # Portfolio projects grid
+│   └── Contact.jsx/css   # Contact links section
+├── App.jsx               # Main app with splash screen animation
+├── App.css               # Global styles + animated background blobs
+└── index.css             # Root stylesheet
+```
