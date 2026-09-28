@@ -279,3 +279,13 @@ body {
     100% { transform: translate(-40px, 20px) scale(1.03); }
   }
 }
+
+.app > * {
+  padding-bottom: 2rem;
+}
+
+@media (max-width: 768px) {
+  .app > * {
+    padding-bottom: 1.5rem;
+  }
+}

@@ -2,10 +2,11 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import "./Hero.css";
 
 const ROLES = [
-  { label: "Frontend Developer", color: "#8ab4ff" },
-  { label: "React Developer", color: "#a78bfa" },
-  { label: "UI Engineer", color: "#34d399" },
-  { label: "Creative Coder", color: "#fb923c" },
+  { label: "Product Engineer", color: "#8ab4ff" },
+  { label: "Full Stack Engineer", color: "#a78bfa" },
+  { label: "AI Application Developer", color: "#34d399" },
+  { label: "E2E Web Engineer", color: "#fb923c" },
+  { label: "Creative Coder", color: "#f43f5e" },
 ];
 
 const ROLE_LIGHT_COLORS = {
@@ -13,6 +14,7 @@ const ROLE_LIGHT_COLORS = {
   "#a78bfa": "#7c3aed",
   "#34d399": "#059669",
   "#fb923c": "#ea580c",
+  "#f43f5e": "#e11d48",
 };
 
 const BLOB_QUIPS = [
@@ -464,8 +466,9 @@ export default function Hero() {
             </span>
           </p>
           <p className="hero__text hero__anim hero__anim--5">
-            I design and build clean, performant web experiences with a focus on
-            detail, motion, and usability.
+            I build complete web products from concept to deployment—combining
+            crisp UI engineering, scalable backend logic, and smooth interactive
+            details.
           </p>
 
           <div className="hero__actions hero__anim hero__anim--6">
